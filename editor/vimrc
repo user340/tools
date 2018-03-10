@@ -1,0 +1,216 @@
+" ##############################################################################
+" #
+" # Begin function definition
+" #
+" ##############################################################################
+
+function Ruby_indent()
+	set tabstop=2
+    set softtabstop=2
+	set shiftwidth=2
+	set expandtab
+:endfunction
+
+:function C_indent()
+	set tabstop=8
+	set shiftwidth=8
+:endfunction
+
+" ##############################################################################
+" #
+" # End of function definition
+" #
+" ##############################################################################
+
+" ##############################################################################
+" #
+" # Begin Main Configurations. 
+" #
+" ##############################################################################
+
+let ext = expand("%:e")
+
+if &compatible
+	set nocompatible
+endif
+if ext == 'rb'
+	:call Ruby_indent()
+elseif ext == 'c' || ext == 'go'
+	:call C_indent()
+else
+	set tabstop=4
+    set softtabstop=4
+	set shiftwidth=4
+	set expandtab
+endif
+
+" Enable Backspace Key
+set backspace=indent,eol,start
+
+" Vim Layout
+set hidden
+set number
+set title
+set showcmd
+set cmdheight=2
+set showmatch
+set matchtime=1
+set ambiwidth=double
+set pumheight=5
+set colorcolumn=80
+set cursorline
+hi clear CursorLine
+set vb t_vb=
+set formatoptions+=mMj
+
+" Fix ESC Delay in CUI
+if !has('gui_running')
+	set timeout timeoutlen=1000 ttimeoutlen=50
+endif
+
+" Vim Command
+set wildmenu
+set wildmode=list:longest,full
+set history=1000
+
+" Status Line Layout
+set laststatus=2
+set statusline=
+set statusline+=%5*%{&ff}%*
+set statusline+=%4*\ %<%F%*
+set statusline+=%2*\ %y
+set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}
+set statusline+=%2*%m%*
+set statusline+=%8*\ %=\ row:%l/%L\ (%03p%%)
+set statusline+=%1*%4v\ %*
+
+" Tab and Indent Configure
+set autoindent
+set smartindent
+
+" Search Configure
+set wrapscan
+set hlsearch
+set wildmenu
+set nostartofline
+set ignorecase
+set smartcase
+
+" Backup
+set nobackup
+set noswapfile
+
+" Encoding Configure
+set termencoding=utf-8
+set encoding=utf-8
+set fileformats=unix,mac,dos
+set fileencoding=utf-8
+set fileencodings=utf-8,shift-jis,euc-jp
+
+" Syntax Color
+syntax enable
+colorscheme elflord
+
+" ##############################################################################
+" #
+" # Begin Plugin Setting 
+" # 
+" # How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
+" #     1. Clone Vundle.vim to $HOME/.vim/bundle
+" #         $ git clone https://github.com/VundleVim/Vundle.vim.git \
+" #         > $HOME/.vim/bundle/Vundle.vim
+" #     2. Run the following command on vim.
+" #         :PluginInstall
+" #
+" ##############################################################################
+
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Require
+Plugin 'VundleVim/Vundle.vim'
+
+"
+" Syntax Check
+" *** Require to Use ***
+"     - ShellScript (Bourne Shell, Bash)
+"         - ShellCheck (https://www.shellcheck.net)
+"
+Plugin 'vim-syntastic/syntastic'
+
+"
+" Mappings to delete, change and add such surroundings in pairs.
+" How to Use tpope/vim-surround
+"     +----------+---------+----------+
+"     | original | command |  result  |
+"     +----------+---------+----------+
+"     |  "Hello" |   cs"'  |  'Hello' |
+"     |  "Hello" |   ds"   |   Hello  |
+"     |   Hello  |  ysiw[  |  [Hello] |
+"     +----------+---------+----------+
+"
+Plugin 'tpope/vim-surround'
+
+" Markdown
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled=1
+set conceallevel=2
+map mn <Plug>Markdown_MoveToNextHeader
+map mp <Plug>Markdown_MoveToPreviousHeader
+map mN <Plug>Markdown_MoveToNextSiblingHeader
+map mP <Plug>Markdown_MoveToPreviousSiblingHeader
+map mc <Plug>Markdown_MoveToCurHeader
+map mu <Plug>Markdown_MoveToParentHeader
+
+" Golang
+Plugin 'fatih/vim-go'
+
+call vundle#end()
+filetype plugin indent on
+syntax on
+
+" ##############################################################################
+" #
+" # End of Plugin Setting
+" #
+" ##############################################################################
+
+" Custom Key Binding
+inoremap {} {}<Left>
+inoremap [] []<Left>
+inoremap () ()<Left>
+inoremap "" ""<Left>
+inoremap '' ''<Left>
+inoremap <> <><Left>
+inoremap <c-e> <Esc>$a
+inoremap <c-a> <Esc>^i
+inoremap <c-c> <Esc>
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+nnoremap <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
+nnoremap + <C-a>
+nnoremap - <C-x>
+inoremap <c-h> <Left>
+inoremap <c-j> <DOWN>
+inoremap <c-k> <UP>
+inoremap <c-l> <Right>
+nnoremap k gk
+nnoremap j gj
+nnoremap <UP> gk
+nnoremap <DOWN> gj
+
+"
+" ctags setting
+" *** How to Use ***
+"     1. Install exctags.
+"     2. Run the following command on src directory.
+"         $ exctags --output=.tags -R .
+"
+set tags=./.tags;
+set notagbsearch
+nnoremap tj :exe("tjump ".expand('<cword>'))<CR>
+nnoremap tb :pop<CR>
+nnoremap tn :tag<CR>
+
+noremap!  
