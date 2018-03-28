@@ -1,47 +1,22 @@
-" ##############################################################################
-" #
-" # Begin function definition
-" #
-" ##############################################################################
-
 function Ruby_indent()
-	set tabstop=2
+    set tabstop=2
     set softtabstop=2
-	set shiftwidth=2
-	set expandtab
+    set shiftwidth=2
 :endfunction
-
-:function C_indent()
-	set tabstop=8
-	set shiftwidth=8
-:endfunction
-
-" ##############################################################################
-" #
-" # End of function definition
-" #
-" ##############################################################################
-
-" ##############################################################################
-" #
-" # Begin Main Configurations. 
-" #
-" ##############################################################################
 
 let ext = expand("%:e")
 
 if &compatible
-	set nocompatible
+    set nocompatible
 endif
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
 if ext == 'rb'
-	:call Ruby_indent()
-elseif ext == 'c' || ext == 'go'
-	:call C_indent()
-else
-	set tabstop=4
-    set softtabstop=4
-	set shiftwidth=4
-	set expandtab
+    :call Ruby_indent()
 endif
 
 " Enable Backspace Key
@@ -65,7 +40,7 @@ set formatoptions+=mMj
 
 " Fix ESC Delay in CUI
 if !has('gui_running')
-	set timeout timeoutlen=1000 ttimeoutlen=50
+    set timeout timeoutlen=1000 ttimeoutlen=50
 endif
 
 " Vim Command
@@ -111,19 +86,12 @@ set fileencodings=utf-8,shift-jis,euc-jp
 syntax enable
 colorscheme elflord
 
-" ##############################################################################
-" #
-" # Begin Plugin Setting 
-" # 
-" # How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
-" #     1. Clone Vundle.vim to $HOME/.vim/bundle
-" #         $ git clone https://github.com/VundleVim/Vundle.vim.git \
-" #         > $HOME/.vim/bundle/Vundle.vim
-" #     2. Run the following command on vim.
-" #         :PluginInstall
-" #
-" ##############################################################################
-
+" How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
+"     1. Clone Vundle.vim to $HOME/.vim/bundle
+"         $ git clone https://github.com/VundleVim/Vundle.vim.git \
+"         > $HOME/.vim/bundle/Vundle.vim
+"     2. Run the following command on vim.
+"         :PluginInstall
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -131,15 +99,12 @@ call vundle#begin()
 " Require
 Plugin 'VundleVim/Vundle.vim'
 
-"
 " Syntax Check
 " *** Require to Use ***
 "     - ShellScript (Bourne Shell, Bash)
 "         - ShellCheck (https://www.shellcheck.net)
-"
 Plugin 'vim-syntastic/syntastic'
 
-"
 " Mappings to delete, change and add such surroundings in pairs.
 " How to Use tpope/vim-surround
 "     +----------+---------+----------+
@@ -149,8 +114,12 @@ Plugin 'vim-syntastic/syntastic'
 "     |  "Hello" |   ds"   |   Hello  |
 "     |   Hello  |  ysiw[  |  [Hello] |
 "     +----------+---------+----------+
-"
 Plugin 'tpope/vim-surround'
+
+" Code Format
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+Plugin 'google/vim-glaive'
 
 " Markdown
 Plugin 'godlygeek/tabular'
@@ -168,14 +137,22 @@ map mu <Plug>Markdown_MoveToParentHeader
 Plugin 'fatih/vim-go'
 
 call vundle#end()
+call glaive#Install()
 filetype plugin indent on
 syntax on
 
-" ##############################################################################
-" #
-" # End of Plugin Setting
-" #
-" ##############################################################################
+" Google Code Format
+augroup autoformat_settings
+    autocmd FileType bzl AutoFormatBuffer buildifier
+    autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+    autocmd FileType dart AutoFormatBuffer dartfmt
+    autocmd FileType go AutoFormatBuffer gofmt
+    autocmd FileType gn AutoFormatBuffer gn
+    autocmd FileType html,css,json AutoFormatBuffer js-beautify
+    autocmd FileType java AutoFormatBuffer google-java-format
+    autocmd FileType python AutoFormatBuffer yapf
+    " Alternative: autocmd FileType python AutoFormatBufferautopep8
+augroup END
 
 " Custom Key Binding
 inoremap {} {}<Left>
@@ -199,18 +176,16 @@ nnoremap k gk
 nnoremap j gj
 nnoremap <UP> gk
 nnoremap <DOWN> gj
+noremap!  
 
-"
 " ctags setting
 " *** How to Use ***
 "     1. Install exctags.
 "     2. Run the following command on src directory.
 "         $ exctags --output=.tags -R .
-"
 set tags=./.tags;
 set notagbsearch
 nnoremap tj :exe("tjump ".expand('<cword>'))<CR>
 nnoremap tb :pop<CR>
 nnoremap tn :tag<CR>
 
-noremap!  
