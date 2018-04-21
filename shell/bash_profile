@@ -24,3 +24,7 @@ alias ssh-add='eval `/usr/bin/ssh-agent` && /usr/bin/ssh-add'
 alias ggl="/usr/pkg/bin/w3m -M https://www.google.co.jp"
 alias update="ssh e-yuuki.org 'cd www && git pull'"
 alias bye="sudo shutdown -p now"
+
+function cd {
+    builtin cd "$@" && ls -F
+}

@@ -105,36 +105,10 @@ Plugin 'VundleVim/Vundle.vim'
 "         - ShellCheck (https://www.shellcheck.net)
 Plugin 'vim-syntastic/syntastic'
 
-" Mappings to delete, change and add such surroundings in pairs.
-" How to Use tpope/vim-surround
-"     +----------+---------+----------+
-"     | original | command |  result  |
-"     +----------+---------+----------+
-"     |  "Hello" |   cs"'  |  'Hello' |
-"     |  "Hello" |   ds"   |   Hello  |
-"     |   Hello  |  ysiw[  |  [Hello] |
-"     +----------+---------+----------+
-Plugin 'tpope/vim-surround'
-
 " Code Format
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
-
-" Markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_disabled=1
-set conceallevel=2
-map mn <Plug>Markdown_MoveToNextHeader
-map mp <Plug>Markdown_MoveToPreviousHeader
-map mN <Plug>Markdown_MoveToNextSiblingHeader
-map mP <Plug>Markdown_MoveToPreviousSiblingHeader
-map mc <Plug>Markdown_MoveToCurHeader
-map mu <Plug>Markdown_MoveToParentHeader
-
-" Golang
-Plugin 'fatih/vim-go'
 
 call vundle#end()
 call glaive#Install()
