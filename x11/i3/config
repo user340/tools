@@ -2,6 +2,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# Windows (WIN) key
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -11,11 +12,25 @@ font pango:Ricty 12
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+
+##
+# Bindsym Configurations
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
 # start a terminal
 bindsym $mod+Return exec /usr/pkg/bin/urxvt
 
+# screenshot
+bindsym Print exec /usr/pkg/bin/scrot
+
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym button2 kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
@@ -27,16 +42,14 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# Move window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 bindsym $mod+v split v
-# bindsym $mod+h split h
-
-bindsym $mod+Shift+e exit
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+v split h
 
 mode "resize" {
 	bindsym h resize shrink width 10 px or 10 ppt
@@ -49,3 +62,48 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Number of workspaces
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+
+# Container moves to ...
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exit
+
+# Reload the configuration file
+bindsym $mod+Shift+r restart
+
+
+##
+# Exec Configurations
+
+# dunst (lightweight notification-daemon)
+exec --no-startup-id dunst
+
+
+##
+# i3bar Configuration
+
+bar {
+    output              LVDS1
+    status_command      i3status
+    position            bottom
+    mode                dock
+    workspace_buttons   yes
+    tray_output         none
+
+    colors {
+            background #000000
+            statusline #ffffff
+
+            focused_workspace  #ffffff #285577
+            active_workspace   #ffffff #333333
+            inactive_workspace #888888 #222222
+            urgent_workspace   #ffffff #900000
+    }
+}

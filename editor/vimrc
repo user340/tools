@@ -15,7 +15,7 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-if ext == 'rb'
+if ext == 'rb' || ext == 'html'
     :call Ruby_indent()
 endif
 
@@ -105,27 +105,9 @@ Plugin 'VundleVim/Vundle.vim'
 "         - ShellCheck (https://www.shellcheck.net)
 Plugin 'vim-syntastic/syntastic'
 
-" Code Format
-Plugin 'google/vim-maktaba'
-Plugin 'google/vim-codefmt'
-Plugin 'google/vim-glaive'
-
 call vundle#end()
-call glaive#Install()
 filetype plugin indent on
 syntax on
-
-" Google Code Format
-augroup autoformat_settings
-    autocmd FileType bzl AutoFormatBuffer buildifier
-    autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-    autocmd FileType dart AutoFormatBuffer dartfmt
-    autocmd FileType go AutoFormatBuffer gofmt
-    autocmd FileType gn AutoFormatBuffer gn
-    autocmd FileType html,css,json AutoFormatBuffer js-beautify
-    autocmd FileType java AutoFormatBuffer google-java-format
-    autocmd FileType python AutoFormatBuffer autopep8
-augroup END
 
 " Custom Key Binding
 inoremap {} {}<Left>
