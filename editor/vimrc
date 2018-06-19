@@ -82,10 +82,6 @@ set fileformats=unix,mac,dos
 set fileencoding=utf-8
 set fileencodings=utf-8,shift-jis,euc-jp
 
-" Syntax Color
-syntax enable
-colorscheme elflord
-
 " How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
 "     1. Clone Vundle.vim to $HOME/.vim/bundle
 "         $ git clone https://github.com/VundleVim/Vundle.vim.git \
@@ -99,6 +95,9 @@ call vundle#begin()
 " Require
 Plugin 'VundleVim/Vundle.vim'
 
+" Color Scheme
+Plugin 'morhetz/gruvbox'
+
 " Syntax Check
 " *** Require to Use ***
 "     - ShellScript (Bourne Shell, Bash)
@@ -108,6 +107,9 @@ Plugin 'vim-syntastic/syntastic'
 call vundle#end()
 filetype plugin indent on
 syntax on
+set background=dark
+colorscheme gruvbox
+
 
 " Custom Key Binding
 inoremap {} {}<Left>
