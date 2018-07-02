@@ -1,0 +1,91 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Ricty 12
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+for_window [class="Vncviewer"] floating enable
+for_window [class="ROX-Filer"] floating enable
+for_window [title="ImageMagick: *"] floating enable
+for_window [title="GIMP *"] floating enable
+
+# start a terminal
+bindsym $mod+Return exec /usr/local/bin/urxvt
+
+bindsym Print exec scrot
+
+# kill focused window
+bindsym $mod+Shift+q kill
+bindsym button2 kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id /usr/local/bin/i3-dmenu-desktop
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+v split v
+bindsym $mod+Shift+v split h
+
+bindsym $mod+Shift+e exit
+bindsym $mod+Shift+r restart
+
+mode "resize" {
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+
+	bindsym Return mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+exec --no-startup-id dunst
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+
+# PageUp / PageDown
+bindsym $mod+Prior workspace prev
+bindsym $mod+Next  workspace next
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+
+bar {
+    output              DP1
+    status_command      i3status
+    position            bottom
+    mode                dock
+    workspace_buttons   yes
+    tray_output         none
+    colors {
+            background #000000
+            statusline #ffffff
+
+            focused_workspace  #ffffff #285577
+            active_workspace   #ffffff #333333
+            inactive_workspace #888888 #222222
+            urgent_workspace   #ffffff #900000
+    }
+}
