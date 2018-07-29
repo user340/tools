@@ -1,22 +1,29 @@
-function Ruby_indent()
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-:endfunction
-
-let ext = expand("%:e")
-
+" Magic
 if &compatible
     set nocompatible
 endif
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
+" Fix ESC Delay in CUI
+if !has('gui_running')
+    set timeout timeoutlen=1000 ttimeoutlen=50
+endif
 
-if ext == 'rb' || ext == 'html'
-    :call Ruby_indent()
+" Indent and Tab/Space Configuration
+let extension = expand("%:e")
+if extension == 'c' || extension == 'go'
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+elseif extension == 'rb' || extension == 'html'
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+    set expandtab
+else
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
 endif
 
 " Enable Backspace Key
@@ -37,11 +44,6 @@ set cursorline
 hi clear CursorLine
 set vb t_vb=
 set formatoptions+=mMj
-
-" Fix ESC Delay in CUI
-if !has('gui_running')
-    set timeout timeoutlen=1000 ttimeoutlen=50
-endif
 
 " Vim Command
 set wildmenu
@@ -71,7 +73,7 @@ set nostartofline
 set ignorecase
 set smartcase
 
-" Backup
+" No Backup
 set nobackup
 set noswapfile
 
@@ -82,6 +84,7 @@ set fileformats=unix,mac,dos
 set fileencoding=utf-8
 set fileencodings=utf-8,shift-jis,euc-jp
 
+""
 " How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
 "     1. Clone Vundle.vim to $HOME/.vim/bundle
 "         $ git clone https://github.com/VundleVim/Vundle.vim.git \
@@ -99,14 +102,18 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'morhetz/gruvbox'
 
 " Syntax Check
-" *** Require to Use ***
-"     - ShellScript (Bourne Shell, Bash)
-"         - ShellCheck (https://www.shellcheck.net)
+"   - ShellScript (Bourne Shell, Bash)
+"       * ShellCheck (https://www.shellcheck.net)
+"   - Python3
+"       * Flake8 (http://flake8.pycqa.org/en/latest/)
 Plugin 'vim-syntastic/syntastic'
+let g:syntastic_python_checkers = ['flake8']
 
 call vundle#end()
 filetype plugin indent on
 syntax on
+
+" Color Scheme Configuration
 set background=dark
 colorscheme gruvbox
 highlight Normal ctermbg=none
@@ -115,8 +122,10 @@ highlight LineNr ctermbg=none
 highlight Folded ctermbg=none
 highlight EndOfBuffer ctermbg=none 
 
-
+""
 " Custom Key Binding
+"
+" In Insert Mode
 inoremap {} {}<Left>
 inoremap [] []<Left>
 inoremap () ()<Left>
@@ -127,20 +136,25 @@ inoremap <c-e> <Esc>$a
 inoremap <c-a> <Esc>^i
 inoremap <c-c> <Esc>
 inoremap <ESC> <ESC>:set iminsert=0<CR>
-nnoremap <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
-nnoremap + <C-a>
-nnoremap - <C-x>
 inoremap <c-h> <Left>
 inoremap <c-j> <DOWN>
 inoremap <c-k> <UP>
 inoremap <c-l> <Right>
+" In Normal Mode
+nnoremap <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
+nnoremap + <C-a>
+nnoremap - <C-x>
 nnoremap k gk
 nnoremap j gj
 nnoremap <UP> gk
 nnoremap <DOWN> gj
 noremap!  
+nnoremap Y y$
+nnoremap <CR> o<Esc>
+nnoremap <Space> i<Space><Esc>
 
-" ctags setting
+""
+" ctags Configuration
 " *** How to Use ***
 "     1. Install exctags.
 "     2. Run the following command on src directory.
