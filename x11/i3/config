@@ -19,7 +19,7 @@ for_window [title="ImageMagick: *"] floating enable
 for_window [title="GIMP *"] floating enable
 
 # start a terminal
-bindsym $mod+Return exec /usr/local/bin/urxvt
+bindsym $mod+Return exec urxvtc
 
 bindsym Print exec scrot
 
@@ -60,8 +60,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+exec --no-startup-id urxvtd -q -o -f
 exec --no-startup-id dunst
-exec --no-startup-id feh --bg-scale ~/src/github.com/Monika-After-Story/MonikaModDev/original_images/images/cg/monika/room.png
+exec --no-startup-id feh --bg-scale ~/.wallpaper.png
 
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
