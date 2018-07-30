@@ -101,6 +101,9 @@ Plugin 'VundleVim/Vundle.vim'
 " Color Scheme
 Plugin 'morhetz/gruvbox'
 
+" Copy and Paste
+Plugin 'ConradIrwin/vim-bracketed-paste'
+
 " Syntax Check
 "   - ShellScript (Bourne Shell, Bash)
 "       * ShellCheck (https://www.shellcheck.net)
