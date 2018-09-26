@@ -1,0 +1,35 @@
+##
+# Basic Configuration
+source "~/.mutt/XXX" # User ID
+source "gpg -dq ~/.mutt/.XXX.pass.gpg |" # Password
+set realname = $my_name
+set from = $my_user
+set use_from = yes
+
+##
+# File Storage Configuration
+set signature=""
+set message_cachedir="~/.mutt/message_cachedir"
+set header_cache="~/.mutt/header_cache"
+set tmpdir="~/.mutt/tmp"
+
+##
+# Text View First
+set editor="vim"
+set pager_stop="yes"
+set smart_wrap="yes"
+auto_view text/html
+alternative_order text/enriched text/plain text text/html
+
+##
+# IMAP Configuration
+set imap_user = $my_user
+set imap_pass = $my_pass
+set folder = ""
+set spoolfile = +INBOX
+
+##
+# SMTP Configuration
+set smtp_url = smtps://$my_user:$my_pass@
+set ssl_force_tls = yes
+set send_charset = "utf-8"

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/local/bin/w3m -T text/html -F -dump "$@"
