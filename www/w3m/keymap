@@ -1,1 +1,2 @@
-keymap C-d GOTO www.google.co.jp
+keymap  C-d GOTO www.google.co.jp
+keymap  C-x TAB_LINK
