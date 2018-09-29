@@ -14,7 +14,7 @@ if extension == 'c' || extension == 'go'
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
-elseif extension == 'rb' || extension == 'html'
+elseif extension == 'rb' || extension == 'html' || extension == 'css'
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
@@ -129,20 +129,13 @@ highlight EndOfBuffer ctermbg=none
 " Custom Key Binding
 "
 " In Insert Mode
-inoremap {} {}<Left>
-inoremap [] []<Left>
-inoremap () ()<Left>
-inoremap "" ""<Left>
-inoremap '' ''<Left>
-inoremap <> <><Left>
 inoremap <c-e> <Esc>$a
 inoremap <c-a> <Esc>^i
-inoremap <c-c> <Esc>
-inoremap <ESC> <ESC>:set iminsert=0<CR>
 inoremap <c-h> <Left>
 inoremap <c-j> <DOWN>
 inoremap <c-k> <UP>
 inoremap <c-l> <Right>
+
 " In Normal Mode
 nnoremap <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
 nnoremap + <C-a>
@@ -168,3 +161,8 @@ nnoremap tj :exe("tjump ".expand('<cword>'))<CR>
 nnoremap tb :pop<CR>
 nnoremap tn :tag<CR>
 
+augroup CloseTag
+    autocmd!
+    autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+    autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+augroup END
