@@ -45,6 +45,8 @@ zstyle ':zle:*' word-style unspecified
 zstyle :compinstall filename '/home/uki/.zshrc'
 zstyle ':completion:*:default' menu select=2
 
+source /usr/pkg/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 #################################################
 #
 # setopt
@@ -77,7 +79,7 @@ $ ' # Two lines
 #
 #################################################
 alias ssh-add='eval `/usr/bin/ssh-agent` && /usr/bin/ssh-add'
-alias ggl="$prefix/bin/w3m https://www.google.co.jp"
+alias ggl="w3m https://www.google.co.jp"
 alias update="ssh e-yuuki.org 'cd www && git pull'"
 alias bye="sudo shutdown -p now"
 alias py="/usr/pkg/bin/python3.7"
