@@ -22,6 +22,10 @@ alias ggl="$prefix/bin/w3m https://www.google.co.jp"
 alias update="ssh e-yuuki.org 'cd www && git pull'"
 alias bye="sudo shutdown -p now"
 alias py="/usr/pkg/bin/python3.7"
+alias filer="pcmanfm"
+# alias filer="pcmanfm-qt"
+alias pdf="llpp"
+# alias pdf="mupdf"
 
 function cd {
     builtin cd "$@" && ls -F
@@ -34,3 +38,14 @@ fi
 if [ -r /usr/pkg/share/examples/password-store/completion/pass.bash-completion ]; then
     . /usr/pkg/share/examples/password-store/completion/pass.bash-completion
 fi
+
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+        if [ "$(cat -- "$tempfile")" != "$(echo -n "$(pwd)")" ]; then
+            cd -- "$(cat "$tempfile")"
+        fi
+        rm -f -- "$tempfile"
+}
+bind '"\C-o":"ranger-cd\C-m"'
