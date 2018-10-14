@@ -5,7 +5,7 @@ My dotfiles for commonly used softwares on NetBSD and FreeBSD.
 ## Directory Tree
 
 ```
-├── LICENSE
+dotfiles/
 ├── README.md
 ├── editor
 │   └── vim
@@ -21,6 +21,9 @@ My dotfiles for commonly used softwares on NetBSD and FreeBSD.
 ├── misc
 │   └── tmux
 │       └── tmux.conf
+├── print
+│   └── llpp
+│       └── llpp.conf
 ├── security
 │   └── gnupg
 │       └── gpg.conf
@@ -29,6 +32,9 @@ My dotfiles for commonly used softwares on NetBSD and FreeBSD.
 │   │   └── bashrc
 │   └── zsh
 │       └── zshrc
+├── sysutils
+│   └── ranger
+│       └── rifle.conf
 ├── www
 │   └── w3m
 │       └── keymap
