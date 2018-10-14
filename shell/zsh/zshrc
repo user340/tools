@@ -1,0 +1,95 @@
+#################################################
+#
+# Zsh variables
+#
+#################################################
+HISTFILE=~/.zsh_histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
+if [ -e $HOME/.zsh/completions ]; then
+    fpath=($HOME/.zsh/completions $fpath)
+fi
+
+#################################################
+#
+# autoload, bindkey, zstyle
+#
+#################################################
+autoload -Uz compinit
+compinit
+
+autoload -Uz colors
+colors
+
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars "_-./;@"
+zstyle ':zle:*' word-style unspecified
+
+bindkey -e
+bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^s' history-incremental-pattern-search-forward
+
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^b" history-beginning-search-forward-end
+
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /=;@:{},|"
+zstyle ':zle:*' word-style unspecified
+
+zstyle :compinstall filename '/home/uki/.zshrc'
+zstyle ':completion:*:default' menu select=2
+
+#################################################
+#
+# setopt
+#
+#################################################
+setopt IGNOREEOF
+setopt auto_pushd
+setopt hist_ignore_all_dups
+setopt pushd_ignore_dups
+setopt prompt_subst
+setopt share_history
+
+#################################################
+#
+# Environment
+#
+#################################################
+export PATH="$HOME/bin:/usr/pkg/sbin:/usr/pkg/bin:/sbin:/usr/sbin:/bin:/usr/bin"
+export PATH="$PATH:/usr/X11R7/bin"
+export EDITOR='vim'
+export CVS_RSH='ssh'
+export TERM='xterm-256color'
+export LANG='ja_JP.UTF-8'
+export PROMPT='%{${fg[yellow]}%}%B%n@%~%b%{${reset_color}%}
+$ ' # Two lines
+
+#################################################
+#
+# alias
+#
+#################################################
+alias ssh-add='eval `/usr/bin/ssh-agent` && /usr/bin/ssh-add'
+alias ggl="$prefix/bin/w3m https://www.google.co.jp"
+alias update="ssh e-yuuki.org 'cd www && git pull'"
+alias bye="sudo shutdown -p now"
+alias py="/usr/pkg/bin/python3.7"
+alias pdf="mupdf"
+alias filer="pcmanfm"
+
+#################################################
+#
+# function
+#
+#################################################
+function chpwd() {
+    ls -F
+}
+

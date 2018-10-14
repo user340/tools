@@ -1,24 +1,42 @@
 # dotfiles
 
-My dotfiles for commonly used softwares on NetBSD.
+My dotfiles for commonly used softwares on NetBSD and FreeBSD.
 
 ## Directory Tree
 
 ```
-dotfiles/
+├── LICENSE
 ├── README.md
 ├── editor
-│   └── vimrc
+│   └── vim
+│       └── vimrc
 ├── inputmethod
-│   └── ibus_mozc_keymap.txt
+│   └── ibus-mozc
+│       └── ibus_mozc_keymap.txt
+├── mail
+│   └── neomutt
+│       ├── bin
+│       │   └── html2txt
+│       └── muttrc
 ├── misc
-│   └── tmux.conf
+│   └── tmux
+│       └── tmux.conf
+├── security
+│   └── gnupg
+│       └── gpg.conf
 ├── shell
-│   ├── bash_profile
-│   └── bashrc
+│   ├── bash
+│   │   └── bashrc
+│   └── zsh
+│       └── zshrc
+├── www
+│   └── w3m
+│       └── keymap
 └── x11
     ├── Xdefaults
     ├── i3
-    │   └── config
+    │   ├── config
+    │   └── config_freebsd
+    ├── i3status.conf
     └── xinitrc
 ```
