@@ -161,6 +161,8 @@ nnoremap tj :exe("tjump ".expand('<cword>'))<CR>
 nnoremap tb :pop<CR>
 nnoremap tn :tag<CR>
 
+autocmd BufNewFile,BufRead ~/.mutt/tmp/neomutt-* set textwidth=64 colorcolumn=64
+
 augroup CloseTag
     autocmd!
     autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
