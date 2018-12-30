@@ -175,3 +175,13 @@ augroup CloseTag
     autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
     autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
 augroup END
+
+function Quote()
+    let pos = getpos(".")
+    execute ":normal i"
+        \ . "<figure><blockquote><p></p></blockquote>"
+        \ . "<footer>&mdash; <cite></cite>, <cite></cite>"
+        \ . "</footer></figure>"
+    call setpos(".", pos)
+endfunction
+command Quote call Quote()
