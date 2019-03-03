@@ -33,3 +33,20 @@ set spoolfile = +INBOX
 set smtp_url = smtps://$my_user:$my_pass@
 set ssl_force_tls = yes
 set send_charset = "utf-8"
+
+##
+# Coloring
+color normal white black
+color hdrdefault blue black
+color indicator white blue
+color markers red black
+color quoted cyan black
+color status white blue
+color error red white
+color underline yellow black
+
+mono quoted standout
+mono hdrdefault underline
+mono indicator underline
+mono status bold
+
