@@ -2,7 +2,8 @@
 
 cmd="npm"
 cmd_opt="install -g"
-targets="textlint-rule-no-start-duplicated-conjunction
+targets="textlint
+textlint-rule-no-start-duplicated-conjunction
 textlint-rule-no-exclamation-question-mark
 textlint-rule-ng-word
 textlint-rule-no-dead-link
