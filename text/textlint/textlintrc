@@ -1,0 +1,121 @@
+// Thank you:
+//      - https://efcl.info/2015/10/19/textlint-plugin-jtf-style/ 
+//      - https://qiita.com/azu/items/60764ed6f415d3c748bf
+//      - https://www.monotalk.xyz/blog/web%E3%82%B5%E3%82%A4%E3%83%88-%E3%81%AE-html-%E3%82%92-textlint-%E3%81%A7%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%81%99%E3%82%8B/
+{
+    // HTMLプラグインを有効にする
+    "plugins": [
+    "html"
+    ],
+    "rules": {
+        // 一文の「、」を3つに制限
+        "max-ten": {
+            "max" : 3
+        },
+        // 一文あたりの文字数を90文字に制限する
+        "sentence-length": {
+            "max": 90
+        },
+        // 段落内の単語の出現回数を確認
+        "textlint-rule-max-appearence-count-of-words": {
+            "limit": 5
+        },
+        // タイトルの文字数を確認
+        "textlint-rule-max-length-of-title": {
+            "<h1>": 25,
+            "<h2>": 30
+        },
+        // 連続した否定を検知
+        "no-start-duplicated-conjunction": {
+            "interval" : 2 // interval of sentences
+        },
+        // 日付表示の間違いを検知
+        "date-weekday-mismatch": {
+            "lang": "ja"
+        },
+        // 表記ゆれの検知
+        "terminology": {
+            // Load default terms (see terms.json in the repository)
+            "defaultTerms": true,
+            // Syntax elements to skip. Overrides the default
+            "skip": ["Blockquote"],
+            // List of terms
+            "terms": [
+            // Exact spelling including the case
+            "JavaScript",
+            "ESLint",
+            "Sass",
+            "Less",
+            "npm",
+            // RegExp (case-insensitive) → replacement
+            ["front[- ]end(\\w*)", "frontend$1"],
+            ["back[- ]end(\\w*)", "backend$1"],
+            ["web[- ]?site(s?)", "site$1"],
+            ["hot[- ]key", "hotkey"],
+            ["repo\\b", "repository"],
+            ["CLI tool(s?)", "command line tool$1"],
+            ["build system(s?)", "build tool$1"],
+            ["id['’]?s", "IDs"],
+            ["(\\w+[^.?!]\\)? )webpack", "$1webpack"],
+            ["(\\w+[^.?!]\\)? )internet", "$internet"]
+            ],
+            // // OR load terms from a file
+            // "terms": "~/terms.json",
+            // // OR load terms from npm
+            // "terms": "@johnsmith/terms"
+        },
+        // 「の」の多用を検知
+        "no-doubled-joshi": {
+            "min_interval" : 1,
+            "strict": false,
+            "allow": []
+        },
+        // 漢字の文字数を制限
+        "max-kanji-continuous-len": {
+            max: 5,
+            allow: ["倍精度浮動小数点数", "第二十回定期総会",
+                    "千歳科学技術大学", "光科学研究科",
+                    "博士前期課程", "情報処理学会",
+                    "第十九回定期総会", "回情報科学技術"]
+        },
+        // エクスクラメーションマークに対するチェック
+        "no-exclamation-question-mark": true,
+        // NFD問題対策
+        "no-nfd": true,
+        // Unicode サロゲートペアを検知
+        "no-surrogate-pair": true,
+        // JTF日本語標準スタイルガイド
+        "preset-jtf-style": true,
+        // 二重否定を検知
+        "no-double-negative-ja": true,
+        // 半角カナを検知
+        "no-hankaku-kana": true,
+        // 冗長な表現を検知
+        "ja-no-redundant-expression": true,
+        // 全角・半角アルファベットの混同を検知
+        "no-mixed-zenkaku-and-hankaku-alphabet": true,
+        // 「ら」抜き言葉を検知
+        "no-dropping-the-ra": true,
+        // 逆説の接続助詞「が」を検知
+        "no-doubled-conjunctive-particle-ga": true,
+        // 句点記号の統一を確認
+        "ja-no-mixed-period": true,
+        // 見出しのレベルに抜けがないかを確認
+        "incremental-headers": true,
+        // 開くべき漢字を検知（形式名詞）
+        "ja-hiragana-keishikimeishi": true,
+        // 開くべき漢字を検知（副詞）
+        "ja-hiragana-fukushi": true,
+        // 開くべき漢字を検知（補助動詞）
+        "ja-hiragana-hojodoushi": true,
+        // アルファベットのスペルミスを検知
+        "ja-unnatural-alphabet": true,
+        // サ抜き、サ入れ表現の誤用を検知
+        "@textlint-ja/textlint-rule-no-insert-dropping-sa": true,
+        // 例示・並列・対表現の「〜たり〜たりする」を検知
+        "prefer-tari-tari": true,
+        // よくある日本語の誤用を検知
+        "ja-no-abusage": true
+    }
+}
+
