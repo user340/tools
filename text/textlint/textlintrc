@@ -12,26 +12,19 @@
         "max-ten": {
             "max" : 3
         },
-        // 一文あたりの文字数を90文字に制限する
-        "sentence-length": {
-            "max": 90
-        },
-        // 段落内の単語の出現回数を確認
-        "textlint-rule-max-appearence-count-of-words": {
-            "limit": 5
-        },
-        // タイトルの文字数を確認
-        "textlint-rule-max-length-of-title": {
-            "<h1>": 25,
-            "<h2>": 30
-        },
-        // 連続した否定を検知
+        // 同じ表現から文を開始しすぎない
         "no-start-duplicated-conjunction": {
             "interval" : 2 // interval of sentences
         },
-        // 日付表示の間違いを検知
-        "date-weekday-mismatch": {
-            "lang": "ja"
+        // 逆説の接続助詞「が」を検知
+        "no-doubled-conjunctive-particle-ga": true,
+        // 同じ接続しが連続して出現していないかを検知
+        "no-doubled-conjunction": true,
+        // 「の」の多用を検知
+        "no-doubled-joshi": {
+            "min_interval" : 1,
+            "strict": false,
+            "allow": []
         },
         // 表記ゆれの検知
         "terminology": {
@@ -59,63 +52,46 @@
             ["(\\w+[^.?!]\\)? )webpack", "$1webpack"],
             ["(\\w+[^.?!]\\)? )internet", "$internet"]
             ],
-            // // OR load terms from a file
-            // "terms": "~/terms.json",
-            // // OR load terms from npm
-            // "terms": "@johnsmith/terms"
         },
-        // 「の」の多用を検知
-        "no-doubled-joshi": {
-            "min_interval" : 1,
-            "strict": false,
-            "allow": []
-        },
-        // 漢字の文字数を制限
-        "max-kanji-continuous-len": {
-            max: 5,
-            allow: ["倍精度浮動小数点数", "第二十回定期総会",
-                    "千歳科学技術大学", "光科学研究科",
-                    "博士前期課程", "情報処理学会",
-                    "第十九回定期総会", "回情報科学技術"]
-        },
-        // エクスクラメーションマークに対するチェック
-        "no-exclamation-question-mark": true,
-        // NFD問題対策
-        "no-nfd": true,
-        // Unicode サロゲートペアを検知
-        "no-surrogate-pair": true,
         // JTF日本語標準スタイルガイド
-        "preset-jtf-style": true,
+        "preset-jtf-style": {
+            "1.2.1.句点(。)と読点(、)": false,
+            "3.1.1.全角文字と半角文字の間": false,
+            "4.1.3.ピリオド(.)、カンマ(,)": false,
+            "4.2.6.ハイフン(-)": false,
+            "4.3.2.大かっこ［］": false
+        },
         // 二重否定を検知
         "no-double-negative-ja": true,
-        // 半角カナを検知
-        "no-hankaku-kana": true,
         // 冗長な表現を検知
         "ja-no-redundant-expression": true,
-        // 全角・半角アルファベットの混同を検知
-        "no-mixed-zenkaku-and-hankaku-alphabet": true,
         // 「ら」抜き言葉を検知
         "no-dropping-the-ra": true,
-        // 逆説の接続助詞「が」を検知
-        "no-doubled-conjunctive-particle-ga": true,
-        // 句点記号の統一を確認
-        "ja-no-mixed-period": true,
-        // 見出しのレベルに抜けがないかを確認
-        "incremental-headers": true,
         // 開くべき漢字を検知（形式名詞）
         "ja-hiragana-keishikimeishi": true,
         // 開くべき漢字を検知（副詞）
         "ja-hiragana-fukushi": true,
         // 開くべき漢字を検知（補助動詞）
         "ja-hiragana-hojodoushi": true,
-        // アルファベットのスペルミスを検知
-        "ja-unnatural-alphabet": true,
         // サ抜き、サ入れ表現の誤用を検知
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": true,
         // 例示・並列・対表現の「〜たり〜たりする」を検知
         "prefer-tari-tari": true,
         // よくある日本語の誤用を検知
         "ja-no-abusage": true
+    },
+    "filters": {
+        "whitelist": {
+            "allow": [
+                "/To the extent possible under law[\\s\\S]*?e-yuuki.org./m", // CC0の文面
+                "/<pre><code>[\\s\\S]*?<\/code><\/pre>/m", // code
+                "/<code>[\\s\\S]*?<\/code>/m", // code
+                "/<blockquote>[\\s\\S]*?<\/blockquote>/m", // 引用
+                "/自由か著作権か？/", // 書籍名
+                "/『[\\s\\S]*?』/m", // 書籍名
+                "/[\\s\\S]*?.html/" // URL
+            ]
+        }
     }
 }
 
