@@ -1,6 +1,6 @@
 DISTNAME=	buildbot
 CATEGORIES=	meta-pkgs
-MASTER_SITES=	https://buildbot.net
+MASTER_SITES=	"https://buildbot.net"
 
 MAINTAINER=	uki@NetBSD.org
 COMMENT=	Meta package for buildbot master and worker
