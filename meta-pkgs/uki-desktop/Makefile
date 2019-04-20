@@ -1,4 +1,4 @@
-DISTNAME=	uki-desktop-1.0
+DISTNAME=	uki-desktop-1.1
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
 
@@ -9,6 +9,8 @@ DEPENDS+=	weechat-[0-9]*:../../chat/weechat
 DEPENDS+=	git-[0-9]*:../../devel/git
 DEPENDS+=	exctags-[0-9]*:../../devel/exctags
 DEPENDS+=	vim-[0-9]*:../../editors/vim
+DEPENDS+=	qemu-[0-9]*:../../emulators/qemu
+DEPENDS+=	haxm-[0-9]*:../../emulators/haxm
 DEPENDS+=	noto-emoji-ttf-[0-9]*:../../fonts/noto-emoji-ttf
 DEPENDS+=	ricty-ttf-[0-9]*:../../fonts/ricty-ttf
 DEPENDS+=	feh-[0-9]*:../../graphics/feh
@@ -17,6 +19,7 @@ DEPENDS+=	npm-[0-9]*:../../lang/npm
 DEPENDS+=	neomutt-[0-9]*:../../mail/neomutt
 DEPENDS+=	pkgin-[0-9]*:../../pkgtools/pkgin
 DEPENDS+=	pkg_comp-[0-9]*:../../pkgtools/pkg_comp
+DEPENDS+=	clamav-[0-9]*:../../security/clamav
 DEPENDS+=	cy2-plain-[0-9]*:../../security/cy2-plain # Auth for Gmail
 DEPENDS+=	gnupg2-[0-9]*:../../security/gnupg2
 DEPENDS+=	password-store-[0-9]*:../../security/password-store
