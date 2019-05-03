@@ -14,7 +14,7 @@ if extension == 'c' || extension == 'go'
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
-elseif extension == 'rb' || extension == 'html' || extension == 'css'
+elseif extension == 'sh' || extension == 'html' || extension == 'css'
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
@@ -30,6 +30,7 @@ endif
 set backspace=indent,eol,start
 
 " Vim Layout
+set shortmess+=I
 set hidden
 set number
 set title
@@ -84,6 +85,8 @@ set fileformats=unix,mac,dos
 set fileencoding=utf-8
 set fileencodings=utf-8,shift-jis,euc-jp
 
+set clipboard=nonameed,autoselect
+
 ""
 " How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
 "     1. Clone Vundle.vim to $HOME/.vim/bundle
@@ -105,21 +108,58 @@ Plugin 'morhetz/gruvbox'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
 Plugin 'thinca/vim-quickrun'
-let g:quickrun_config = {
-            \'*': {
-            \       'hook/time/enable': '1',
-            \       'outputter/buffer/split': '15'
-            \},}
+let g:quickrun_config = {'*': {'hook/time/enable': '1','outputter/buffer/split': '15'},}
+set splitbelow
 
 " Syntax Check
 "   - ShellScript (Bourne Shell, Bash)
 "       * ShellCheck (https://www.shellcheck.net)
 "   - Python3
 "       * Flake8 (http://flake8.pycqa.org/en/latest/)
+"   - HTML5
+"       * textlint
 Plugin 'vim-syntastic/syntastic'
 let g:syntastic_python_checkers = ['flake8']
 
+" Markdown
+Plugin 'mzlogin/vim-markdown-toc'
+
+" HTML
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-surround'
+
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'prabirshrestha/asyncomplete-buffer.vim'
+Plugin 'yami-beta/asyncomplete-omni.vim'
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+let g:lsp_diagnostics_enabled = 0
+
 call vundle#end()
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ }))
+call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+\ 'name': 'omni',
+\ 'whitelist': ['*'],
+\ 'blacklist': ['c', 'cpp', 'html'],
+\ 'completor': function('asyncomplete#sources#omni#completor')
+\  }))
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
 filetype plugin indent on
 syntax on
 
@@ -168,8 +208,6 @@ nnoremap tj :exe("tjump ".expand('<cword>'))<CR>
 nnoremap tb :pop<CR>
 nnoremap tn :tag<CR>
 
-autocmd BufNewFile,BufRead ~/.mutt/tmp/neomutt-* set textwidth=64 colorcolumn=64
-
 augroup CloseTag
     autocmd!
     autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
@@ -185,3 +223,5 @@ function Quote()
     call setpos(".", pos)
 endfunction
 command Quote call Quote()
+
+autocmd BufNewFile,BufRead ~/.mutt/tmp/neomutt-* set textwidth=64 colorcolumn=64
