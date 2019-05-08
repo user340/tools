@@ -14,8 +14,3 @@
 1. `firewall-cmd --permanent --direct --passthrough ipv4 -I FORWARD -o br0 -j ACCEPT`
 1. `firewall-cmd --reload`
 
-### libvirt
-
-```
-# yum install libvirt libvirt-devel
-```
