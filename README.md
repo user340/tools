@@ -6,6 +6,7 @@ Tools for me. Scripts, configurations and others. Most scripts and configuration
 <!-- vim-markdown-toc GFM -->
 
 * [LICENSE](#license)
+* [Categories](#categories)
 * [Scripts](#scripts)
     * [emulators/qemu](#emulatorsqemu)
     * [www/conoha](#wwwconoha)
@@ -15,6 +16,10 @@ Tools for me. Scripts, configurations and others. Most scripts and configuration
 ## LICENSE
 
 These files are public domain if license is not specified.
+
+## Categories
+
+I follow pkgsrc's category rule.
 
 ## Scripts
 
