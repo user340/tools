@@ -1,48 +1,27 @@
-# dotfiles
+# tools
 
-My dotfiles for commonly used softwares on NetBSD and FreeBSD.
+Tools for me. Scripts, configurations and others. Most scripts and configurations are written for NetBSD and FreeBSD environment. I don't care to GNU/Linux in most cases.
 
-## Directory Tree
 
-```
-dotfiles/
-├── README.md
-├── editor
-│   └── vim
-│       └── vimrc
-├── inputmethod
-│   └── ibus-mozc
-│       └── ibus_mozc_keymap.txt
-├── mail
-│   └── neomutt
-│       ├── bin
-│       │   └── html2txt
-│       └── muttrc
-├── misc
-│   └── tmux
-│       └── tmux.conf
-├── print
-│   └── llpp
-│       └── llpp.conf
-├── security
-│   └── gnupg
-│       └── gpg.conf
-├── shell
-│   ├── bash
-│   │   └── bashrc
-│   └── zsh
-│       └── zshrc
-├── sysutils
-│   └── ranger
-│       └── rifle.conf
-├── www
-│   └── w3m
-│       └── keymap
-└── x11
-    ├── Xdefaults
-    ├── i3
-    │   ├── config
-    │   └── config_freebsd
-    ├── i3status.conf
-    └── xinitrc
-```
+<!-- vim-markdown-toc GFM -->
+
+* [LICENSE](#license)
+* [Scripts](#scripts)
+    * [emulators/qemu](#emulatorsqemu)
+    * [www/conoha](#wwwconoha)
+
+<!-- vim-markdown-toc -->
+
+## LICENSE
+
+These files are **public domain**.
+
+## Scripts
+
+### emulators/qemu
+
+QEMU-HAXM wrapper that written by Python 3. Many user choice libvirt for management QEMU virtual machines, but I want to walk on more premitive way.
+
+### www/conoha
+
+User interface of ConoHa VPS API. It written by Python 3. You may prepare venv.
