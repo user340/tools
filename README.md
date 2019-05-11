@@ -14,7 +14,7 @@ Tools for me. Scripts, configurations and others. Most scripts and configuration
 
 ## LICENSE
 
-These files are **public domain**.
+These files are public domain if license is not specified.
 
 ## Scripts
 
