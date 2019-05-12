@@ -1,3 +1,4 @@
+build/
 src/__pycache__/
 src/conf/conohactl.conf
 src/lib/__pycache__/
