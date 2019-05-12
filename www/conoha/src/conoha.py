@@ -35,6 +35,11 @@ def change_plan(args):
 
 def getargs():
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-c', '--conf',
+        type=str,
+        default='./src/conf/conohactl.conf',
+        help='Path to conf file')
     subparser = parser.add_subparsers()
     """ info """
     info = subparser.add_parser(
@@ -126,8 +131,8 @@ def getargs():
 
 
 if __name__ == '__main__':
-    cmd = cmd.ConoHaCmd(confname='./src/conf/conohactl.conf')
     args, print_help = getargs()
+    cmd = cmd.ConoHaCmd(confname=args.conf)
     if hasattr(args, 'func'):
         args.func(args)
     else:

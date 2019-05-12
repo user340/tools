@@ -7,7 +7,10 @@ setup(name='conohactl',
       description='Interface for manage VPS on ConoHa',
       author='Yuuki Enomoto',
       author_email='uki@e-yuuki.org',
-      url='https://github.com/user340/conohactl',
+      license='public domain',
+      url='https://github.com/user340/tools/www/conoha',
       package_dir={'': 'src'},
-      py_modules=['conoha', 'lib.api', 'lib.cmd']
+      py_modules=['lib.api', 'lib.cmd', 'lib.exceptions'],
+      scripts=['src/conoha.py'],
+      install_requires=['yaml', 'requrests', 'texttable']
       )
