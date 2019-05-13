@@ -24,17 +24,35 @@ class TestQemuImg(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def __check_assertRaises_number(self, exception, function, excepted=[]):
+        for test in 0.1, -0.1, 0, 1, -1:
+            if test in excepted:
+                continue
+            self.assertRaises(exception, function, test)
+
+    def __check_assertRaises_data_structure(self, exception,
+                                            function, excepted=[]):
+        for test in [['test', 'test'], {'test', 'test'}, {'test': 'test'}]:
+            if test in excepted:
+                continue
+            self.assertRaises(exception, function, test)
+
     def test_parse_size(self):
-        self.assertRaises(TypeError, self.qm.parse_size, {'size': '10GB'})
-        self.assertRaises(TypeError, self.qm.parse_size, {'size', '10GB'})
-        self.assertRaises(TypeError, self.qm.parse_size, ['size', '10GB'])
+        # Abnormal test
+        self.__check_assertRaises_number(
+            TypeError,
+            self.qm.parse_size,
+            excepted=[1, -1, 0]
+        )
+        self.__check_assertRaises_data_structure(TypeError, self.qm.parse_size)
         self.assertRaises(TypeError, self.qm.parse_size)
-        self.assertRaises(TypeError, self.qm.parse_size, 0.1)
+        self.assertRaises(ValueError, self.qm.parse_size, '10UB')
         self.assertRaises(ValueError, self.qm.parse_size, 0)
         self.assertRaises(ValueError, self.qm.parse_size, -1)
-        self.assertRaises(ValueError, self.qm.parse_size, '10UB')
-        #  key   -- excepted return value
-        #  value -- test patterns
+        # Normal test
+        self.assertEqual(self.qm.parse_size(1), 1)
+        # key   -- excepted return value
+        # value -- test patterns
         testcases = {
             '10K': ['10k', '10KB', '10Kb', '10kb', '10kB', '10k'],
             '10G': ['10G', '10GB', '10Gb', '10gb', '10gB', '10g'],
@@ -45,6 +63,11 @@ class TestQemuImg(unittest.TestCase):
         for except_return, argument_patterns in testcases.items():
             for pattern in argument_patterns:
                 self.assertEqual(self.qm.parse_size(pattern), except_return)
+
+    def test_absname(self):
+        self.__check_assertRaises_number(TypeError, self.qm.absname)
+        self.__check_assertRaises_data_structure(TypeError, self.qm.absname)
+        self.assertEqual(self.qm.absname(self.img + 'qcow2'))
 
     def test_create(self):
         self.assertRaises(
