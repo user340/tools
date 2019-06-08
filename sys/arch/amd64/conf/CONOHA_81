@@ -1126,7 +1126,7 @@ pseudo-device	l2tp			# L2TPv3 interface
 #pseudo-device	pf			# PF packet filter
 #pseudo-device	pflog			# PF log if
 #pseudo-device	pfsync			# PF sync if
-#pseudo-device	npf			# NPF packet filter
+pseudo-device	npf			# NPF packet filter
 
 #pseudo-device	canloop			# CAN loopback interface
 
