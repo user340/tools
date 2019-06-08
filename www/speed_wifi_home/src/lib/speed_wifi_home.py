@@ -4,6 +4,9 @@ import os
 import re
 import yaml
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.options import Options
 from typing import Tuple
 
@@ -36,9 +39,8 @@ class SpeedWifiHome:
         return login['address'], login['username'], login['password']
 
     def login(self, address: str, username: str, password: str) -> None:
-        self.__check_str(address)
-        self.__check_str(username)
-        self.__check_str(password)
+        for arg in address, username, password:
+            self.__check_str(arg)
         if not re.match(r'^http[s]{0,1}://', address):
             url = 'http://' + address
         else:
@@ -49,3 +51,13 @@ class SpeedWifiHome:
         self.browser.find_element_by_id('user_type').send_keys(username)
         self.browser.find_element_by_id('input_password').send_keys(password)
         self.browser.find_element_by_id('login').click()
+
+    def get_traffic_of_last_three_days(self) -> str:
+        current = self.browser.current_url.split('/')
+        del current[-1]
+        url = '/'.join(current) + '/statistics.htm'
+        print(url)
+        self.browser.get(url)
+        ret = self.browser.page_source
+        self.__check_str(ret)
+        return ret

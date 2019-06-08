@@ -33,9 +33,8 @@ class TestSpeedWifiHome(unittest.TestCase):
         self.__check_type(self.user.parse_conf)
         self.assertRaises(FileNotFoundError, self.user.parse_conf, 'jjklla')
         addr, user, passwd = self.user.parse_conf(self.conf)
-        self.assertIsInstance(addr, str)
-        self.assertIsInstance(user, str)
-        self.assertIsInstance(passwd, str)
+        for i in addr, user, passwd:
+            self.assertIsInstance(i, str)
 
     def test_login(self) -> None:
         testcases = [0, 0.123, True, None, [1, 2], {1, 2}, {'test': 'x'}]
@@ -44,4 +43,10 @@ class TestSpeedWifiHome(unittest.TestCase):
                 self.assertRaises(TypeError, self.user.login, i, j)
         addr, user, passwd = self.user.parse_conf(self.conf)
         self.user.login(addr, user, passwd)
-        print(self.user.browser.title)
+        # print(self.user.browser.title)
+
+    def test_get_traffic_of_last_three_days(self) -> None:
+        self.test_login()
+        ret = self.user.get_traffic_of_last_three_days()
+        self.assertIsInstance(ret, str)
+        print(ret)
