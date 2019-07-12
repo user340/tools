@@ -1,8 +1,10 @@
-DISTNAME=	uki-desktop-1.1
+# $NetBSD$
+DISTNAME=	uki-desktop-2019Q2
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
 
 MAINTAINER=	uki@NetBSD.org
+HOMEPAGE=	https://e-yuuki.org
 COMMENT=	Meta package for my develop environment
 
 DEPENDS+=	weechat-[0-9]*:../../chat/weechat
@@ -16,6 +18,8 @@ DEPENDS+=	ricty-ttf-[0-9]*:../../fonts/ricty-ttf
 DEPENDS+=	feh-[0-9]*:../../graphics/feh
 DEPENDS+=	ibus-mozc-[0-9]*:../../inputmethod/ibus-mozc
 DEPENDS+=	npm-[0-9]*:../../lang/npm
+DEPENDS+=	python37-[0-9]*:../../lang/python37
+DEPENDS+=	tmux-[0-9]*:../../misc/tmux
 DEPENDS+=	neomutt-[0-9]*:../../mail/neomutt
 DEPENDS+=	pkgin-[0-9]*:../../pkgtools/pkgin
 DEPENDS+=	pkg_comp-[0-9]*:../../pkgtools/pkg_comp
