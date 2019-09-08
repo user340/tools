@@ -8,24 +8,6 @@ if !has('gui_running')
     set timeout timeoutlen=1000 ttimeoutlen=50
 endif
 
-" Indent and Tab/Space Configuration
-let extension = expand("%:e")
-if extension == 'c' || extension == 'go'
-    set tabstop=8
-    set softtabstop=8
-    set shiftwidth=8
-elseif extension == 'sh' || extension == 'html' || extension == 'css'
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-    set expandtab
-else
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-endif
-
 " Enable Backspace Key
 set backspace=indent,eol,start
 
@@ -98,20 +80,32 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Require
+" Vundle is short for Vim bundle and is a Vim plugin manager.
 Plugin 'VundleVim/Vundle.vim'
 
-" Color Scheme
+" gruvbox is heavily inspired by badwolf, jellybeans and solarized.
+"
+" Designed as a bright theme with pastel 'retro groove' colors and light/dark
+" mode switching in the way of solarized. The main focus when developing
+" gruvbox is to keep colors easily distinguishable, contrast enough and still 
+" pleasant for the eyes.
 Plugin 'morhetz/gruvbox'
 
-" Copy and Paste
+" vim-bracketed-paste enables transparent pasting into vim.
+" (i.e. no more :set paste!)
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
+" Run commands quickly.
 Plugin 'thinca/vim-quickrun'
 let g:quickrun_config = {'*': {'hook/time/enable': '1','outputter/buffer/split': '15'},}
 set splitbelow
 
-" Syntax Check
+" Syntastic is a syntax checking plugin for Vim created by Martin Grenfell. It
+" runs files through external syntax checkers and displays any resulting errors
+" to the user. This can be done on demand, or automatically as files are saved.
+" If syntax errors are detected, the user is notified and is happy because they
+" didn't have to compile their code or execute their script to find them.
+"
 "   - ShellScript (Bourne Shell, Bash)
 "       * ShellCheck (https://www.shellcheck.net)
 "   - Python3
@@ -120,27 +114,69 @@ set splitbelow
 "       * textlint
 Plugin 'vim-syntastic/syntastic'
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_rust_chechkers = ['cargo']
 
-" Markdown
+" VimWiki is a personal wiki for Vim
+" -- a number of linked text files that have their own syntax highlighting.
+Plugin 'vimwiki/vimwiki'
+let g:vimwiki_ext2syntax = {
+    \ '.md': 'markdown',
+    \ '.markdown': 'markdown',
+    \ '.mdown': 'markdown'
+    \ }
+let g:vimwiki_list = [
+        \ {
+            \ 'path': '~/src/github.com/user340/wiki/',
+            \ 'syntax': 'markdown',
+            \ 'ext': 'md'
+        \ }
+    \ ]
+
+" A vim 7.4+ plugin to generate table of contents for Markdown files.
 Plugin 'mzlogin/vim-markdown-toc'
 
-" Local Wiki
-Plugin 'vimwiki/vimwiki'
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-let g:vimwiki_list = [{'path': '~/src/github.com/user340/wiki/', 'syntax': 'markdown', 'ext': 'md'}]
-
-" HTML
+" emmet-vim is a vim plug-in which provides support for expanding abbreviations
+" similar to emmet.
 Plugin 'mattn/emmet-vim'
+
+" Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
+" tags, and more. The plugin provides mappings to easily delete, change and add
+" such surroundings in pairs.
 Plugin 'tpope/vim-surround'
 
+" This is a Vim plugin that provides Rust file detection, syntax highlighting,
+" formatting, Syntastic integration, and more. It requires Vim 8 or higher for
+" full functionality. Some things may not work on earlier versions.
+Plugin 'rust-lang/rust.vim'
+let g:rustfmt_autosave = 1
+
+" Async autocompletion for Vim 8 and Neovim with |timers|.
 Plugin 'prabirshrestha/asyncomplete.vim'
+" {{{ BEGIN asyncomplete requires
+" normalize async job control api for vim and neovim
 Plugin 'prabirshrestha/async.vim'
+" Async Language Server Protocol plugin for vim8 and neovim.
 Plugin 'prabirshrestha/vim-lsp'
+" Provide Language Server Protocol autocompletion source 
+" for asyncomplete.vim and vim-lsp.
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+" }}} END asyncomplete requires
+
+" Provide buffer autocompletion source for asyncomplete.vim
 Plugin 'prabirshrestha/asyncomplete-buffer.vim'
+
+" Filename completion source for asyncomplete.vim
+Plugin 'prabirshrestha/asyncomplete-file.vim'
+
+" Vim plugin for insert mode completion of words in adjacent tmux panes
+Plugin 'wellle/tmux-complete.vim'
+
+" Omni completion source for asyncomplete.vim
 Plugin 'yami-beta/asyncomplete-omni.vim'
+
+" LSP settings for each languages
 if executable('pyls')
-    " pip install python-language-server
+    " It requries command that `pip install python-language-server`
     au User lsp_setup call lsp#register_server({
         \ 'name': 'pyls',
         \ 'cmd': {server_info->['pyls']},
@@ -150,21 +186,36 @@ endif
 let g:lsp_diagnostics_enabled = 0
 
 call vundle#end()
+
+" Setting of prabirshrestha/asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
     \ 'whitelist': ['*'],
     \ 'blacklist': ['go'],
     \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \   'max_buffer_size': 5000000,
+    \ },
     \ }))
+let g:asyncomplete_buffer_clear_cache = 1  " Clear buffer word cache on events (default: 1)
+" Setting of prabirshrestha/asyncomplete-file.vim
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+" Setting of yami-beta/asyncomplete-omni.vim
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-\ 'name': 'omni',
-\ 'whitelist': ['*'],
-\ 'blacklist': ['c', 'cpp', 'html'],
-\ 'completor': function('asyncomplete#sources#omni#completor')
-\  }))
+    \ 'name': 'omni',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['c', 'cpp', 'html'],
+    \ 'completor': function('asyncomplete#sources#omni#completor')
+    \  }))
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+
 filetype plugin indent on
 syntax on
 
@@ -227,3 +278,21 @@ endfunction
 command Quote call Quote()
 
 autocmd BufNewFile,BufRead ~/.mutt/tmp/neomutt-* set textwidth=64 colorcolumn=64
+
+" Indent and Tab/Space Configuration
+let extension = expand("%:e")
+if extension == 'c' || extension == 'go'
+    set tabstop=8
+    set softtabstop=8
+    set shiftwidth=8
+elseif extension == 'html' || extension == 'css'
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+    set expandtab
+else
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
+endif
