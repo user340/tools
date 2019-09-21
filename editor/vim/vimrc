@@ -135,9 +135,19 @@ let g:vimwiki_list = [
 " A vim 7.4+ plugin to generate table of contents for Markdown files.
 Plugin 'mzlogin/vim-markdown-toc'
 
-" emmet-vim is a vim plug-in which provides support for expanding abbreviations
-" similar to emmet.
-Plugin 'mattn/emmet-vim'
+" Auto close (X)HTML tags
+Plugin 'alvan/vim-closetag'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+let g:closetag_shortcut = '>'
+let g:closetag_close_shortcut = '<leader>>'
 
 " Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
 " tags, and more. The plugin provides mappings to easily delete, change and add
@@ -181,6 +191,14 @@ if executable('pyls')
         \ 'name': 'pyls',
         \ 'cmd': {server_info->['pyls']},
         \ 'whitelist': ['python'],
+        \ })
+endif
+if executable('rls')
+    " It requries command that `pip install python-language-server`
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rls']},
+        \ 'whitelist': ['rust'],
         \ })
 endif
 let g:lsp_diagnostics_enabled = 0
@@ -260,12 +278,6 @@ nmap <C-j> :Gtags <C-r><C-w><CR>
 nmap <C-k> :Gtags -r <C-r><C-w><CR>
 nmap <C-n> :cn<CR>
 nmap <C-p> :cp<CR>
-
-augroup CloseTag
-    autocmd!
-    autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-    autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-augroup END
 
 function Quote()
     let pos = getpos(".")
