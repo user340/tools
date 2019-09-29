@@ -8,9 +8,10 @@ HOMEPAGE=	https://e-yuuki.org
 COMMENT=	Meta package for my develop environment
 
 DEPENDS+=	weechat-[0-9]*:../../chat/weechat
+DEPENDS+=	exctags-[0-9]*:../../devel/exctags
 DEPENDS+=	git-[0-9]*:../../devel/git
 DEPENDS+=	global-[0-9]*:../../devel/global
-DEPENDS+=	exctags-[0-9]*:../../devel/exctags
+DEPENDS+=	mercurial-[0-9]*:../../devel/mercurial
 DEPENDS+=	vim-[0-9]*:../../editors/vim
 DEPENDS+=	qemu-[0-9]*:../../emulators/qemu
 DEPENDS+=	haxm-[0-9]*:../../emulators/haxm
