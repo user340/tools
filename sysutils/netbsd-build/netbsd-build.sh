@@ -6,23 +6,41 @@ _bomb()
     exit 1
 }
 
+MACHINE="$(uname -m)"
+
 ROOT="/zpool"
 SRC="$ROOT/src"
 XSRC="$ROOT/xsrc"
 OBJ="$ROOT/obj"
 TOOLS="$ROOT/tools"
-CMD="./build.sh -u -U -O $OBJ -T $TOOLS -x -X $XSRC -j3"
+RELEASE="$ROOT/releasedir"
+DEST="$ROOT/destdir/$MACHINE"
+CMD="./build.sh \
+     -D $DEST \
+     -N0 \
+     -O $OBJ \
+     -R $RELEASE \
+     -T $TOOLS \
+     -U \
+     -X $XSRC \
+     -V NETBSD_OFFICIAL_RELEASE=no \
+     -V BUILD=yes \
+     -V MKDEBUG=yes \
+     -m amd64 \
+     -u \
+     -x \
+     -j3"
 HG="/usr/pkg/bin/hg"
 SUDO="/usr/pkg/bin/sudo"
 
-for dir in $ROOT $SRC $XSRC $OBJ $TOOLS; do
+for dir in $ROOT $SRC $XSRC $OBJ $TOOLS $RELEASE $DEST; do
     test -d "$dir" || _bomb "$dir: not found"
 done
 
 for command in $SUDO $HG; do
     test -f "$command" || _bomb "$command: command not found"
 done
- 
+
 cd "$XSRC" \
     && $SUDO $HG pull \
     && $SUDO $HG update
