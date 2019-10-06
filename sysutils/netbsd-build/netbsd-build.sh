@@ -23,9 +23,6 @@ CMD="./build.sh \
      -T $TOOLS \
      -U \
      -X $XSRC \
-     -V NETBSD_OFFICIAL_RELEASE=no \
-     -V BUILD=yes \
-     -V MKDEBUG=yes \
      -m amd64 \
      -u \
      -x \
@@ -49,5 +46,6 @@ cd "$SRC" \
     && $SUDO $HG pull \
     && $SUDO $HG update \
     && $SUDO $CMD tools \
-    && $SUDO $CMD distribution \
-    && $SUDO $CMD kernel=GENERIC
+    && $SUDO $CMD kernel=GENERIC \
+    && $SUDO $CMD modules \
+    && $SUDO $CMD distribution
