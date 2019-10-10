@@ -1,5 +1,5 @@
 # $NetBSD$
-DISTNAME=	uki-desktop-2019Q2
+DISTNAME=	uki-desktop-20191010
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
 
@@ -13,8 +13,6 @@ DEPENDS+=	git-[0-9]*:../../devel/git
 DEPENDS+=	global-[0-9]*:../../devel/global
 DEPENDS+=	mercurial-[0-9]*:../../devel/mercurial
 DEPENDS+=	vim-[0-9]*:../../editors/vim
-DEPENDS+=	qemu-[0-9]*:../../emulators/qemu
-DEPENDS+=	haxm-[0-9]*:../../emulators/haxm
 DEPENDS+=	noto-ttf-[0-9]*:../../fonts/noto-ttf
 DEPENDS+=	ricty-ttf-[0-9]*:../../fonts/ricty-ttf
 DEPENDS+=	feh-[0-9]*:../../graphics/feh
@@ -23,8 +21,9 @@ DEPENDS+=	npm-[0-9]*:../../lang/npm
 DEPENDS+=	python37-[0-9]*:../../lang/python37
 DEPENDS+=	tmux-[0-9]*:../../misc/tmux
 DEPENDS+=	neomutt-[0-9]*:../../mail/neomutt
-DEPENDS+=	pkgin-[0-9]*:../../pkgtools/pkgin
 DEPENDS+=	pkg_comp-[0-9]*:../../pkgtools/pkg_comp
+DEPENDS+=	pkg_install-[0-9]*:../../pkgtools/pkg_install
+DEPENDS+=	pkgin-[0-9]*:../../pkgtools/pkgin
 DEPENDS+=	cy2-plain-[0-9]*:../../security/cy2-plain # Auth for Gmail
 DEPENDS+=	gnupg2-[0-9]*:../../security/gnupg2
 DEPENDS+=	openssh-[0-9]*:../../security/openssh
@@ -35,6 +34,7 @@ DEPENDS+=	zsh-completions-[0-9]*:../../shells/zsh-completions
 DEPENDS+=	zsh-syntax-highlighting-[0-9]*:../../shells/zsh-syntax-highlighting
 DEPENDS+=	pcmanfm-[0-9]*:../../sysutils/pcmanfm
 DEPENDS+=	i3status-[0-9]*:../../sysutils/i3status
+DEPENDS+=	qemu-nvmm-[0-9]*:../../wip/qemu-nvmm
 DEPENDS+=	i3-[0-9]*:../../wm/i3
 DEPENDS+=	firefox-[0-9]*:../../www/firefox
 DEPENDS+=	w3m-[0-9]*:../../www/w3m
