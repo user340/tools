@@ -41,7 +41,8 @@ CMD="./build.sh \
      -O $OBJ \
      -R $RELEASE \
      -T $TOOLS \
-     -U \
+     -V NETBSD_OFFICIAL_RELEASE=no \
+     -V BUILD=yes \
      -X $XSRC \
      -m $MACHINE \
      -x \
@@ -51,7 +52,7 @@ SUDO="/usr/pkg/bin/sudo"
 
 # Parse arguments
 
-while getopts r:uh OPT; do
+while getopts r:uUh OPT; do
     case $OPT in
     "r") ROOT="$OPTARG" ;;
     "u") CMD="$CMD -u" ;;
