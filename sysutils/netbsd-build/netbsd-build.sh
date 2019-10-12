@@ -12,9 +12,8 @@ _usage()
 $0 [-r ROOTDIR] [-huU]
 
  Options
-    -r ROOTDIR      Specify root (parent) directory of src, xsrc,
-                    tools, obj, releasedir, and destdir.
-                    [Default: /zpool]
+    -r              Remove contents of TOOLDIR and DESTDIR before 
+                    building.
     -u              *Do not* run "make cleandir" first.
                     Without this, everything is rebuilt, including
                     the tools.
@@ -41,8 +40,6 @@ CMD="./build.sh \
      -O $OBJ \
      -R $RELEASE \
      -T $TOOLS \
-     -V NETBSD_OFFICIAL_RELEASE=no \
-     -V BUILD=yes \
      -X $XSRC \
      -m $MACHINE \
      -x \
@@ -52,9 +49,9 @@ SUDO="/usr/pkg/bin/sudo"
 
 # Parse arguments
 
-while getopts r:uUh OPT; do
+while getopts ruUh OPT; do
     case $OPT in
-    "r") ROOT="$OPTARG" ;;
+    "r") CMD="$CMD -r" ;;
     "u") CMD="$CMD -u" ;;
     "U") CMD="$CMD -U" ;;
     "h") _usage ;;
@@ -83,6 +80,4 @@ cd "$SRC" \
     && $SUDO $HG update \
     && $SUDO $CMD tools \
     && $SUDO $CMD kernel=GENERIC \
-    && $SUDO $CMD modules \
-    && $SUDO $CMD distribution \
-    && $SUDO $CMD release
+    && $SUDO $CMD distribution
