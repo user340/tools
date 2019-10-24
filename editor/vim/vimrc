@@ -139,9 +139,19 @@ let g:vimwiki_list = [
 " A vim 7.4+ plugin to generate table of contents for Markdown files.
 Plugin 'mzlogin/vim-markdown-toc'
 
-" emmet-vim is a vim plug-in which provides support for expanding abbreviations
-" similar to emmet.
-Plugin 'mattn/emmet-vim'
+" Auto close (X)HTML tags
+Plugin 'alvan/vim-closetag'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+let g:closetag_shortcut = '>'
+let g:closetag_close_shortcut = '<leader>>'
 
 " Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
 " tags, and more. The plugin provides mappings to easily delete, change and add
@@ -153,6 +163,12 @@ Plugin 'tpope/vim-surround'
 " full functionality. Some things may not work on earlier versions.
 Plugin 'rust-lang/rust.vim'
 let g:rustfmt_autosave = 1
+
+" Go development plugin for Vim https://www.patreon.com/bhcleek
+Plugin 'fatih/vim-go'
+let g:go_fmt_commnad = "goimports"
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
 
 " Async autocompletion for Vim 8 and Neovim with |timers|.
 Plugin 'prabirshrestha/asyncomplete.vim'
@@ -178,6 +194,9 @@ Plugin 'wellle/tmux-complete.vim'
 " Omni completion source for asyncomplete.vim
 Plugin 'yami-beta/asyncomplete-omni.vim'
 
+" A vim plugin for communicating with a language server
+Plugin 'natebosch/vim-lsc'
+
 " LSP settings for each languages
 if executable('pyls')
     " It requries command that `pip install python-language-server`
@@ -186,6 +205,24 @@ if executable('pyls')
         \ 'cmd': {server_info->['pyls']},
         \ 'whitelist': ['python'],
         \ })
+endif
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+if executable('golsp')
+  augroup LspGo
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'go-lang',
+        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd FileType go setlocal omnifunc=lsp#complete
+  augroup END
 endif
 let g:lsp_diagnostics_enabled = 0
 
@@ -264,12 +301,6 @@ nmap <C-j> :Gtags <C-r><C-w><CR>
 nmap <C-k> :Gtags -r <C-r><C-w><CR>
 nmap <C-n> :cn<CR>
 nmap <C-p> :cp<CR>
-
-augroup CloseTag
-    autocmd!
-    autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-    autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-augroup END
 
 function Quote()
     let pos = getpos(".")
