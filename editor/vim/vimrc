@@ -160,6 +160,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'rust-lang/rust.vim'
 let g:rustfmt_autosave = 1
 
+" Go development plugin for Vim https://www.patreon.com/bhcleek
+Plugin 'fatih/vim-go'
+let g:go_fmt_commnad = "goimports"
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+
 " Async autocompletion for Vim 8 and Neovim with |timers|.
 Plugin 'prabirshrestha/asyncomplete.vim'
 " {{{ BEGIN asyncomplete requires
@@ -184,6 +190,9 @@ Plugin 'wellle/tmux-complete.vim'
 " Omni completion source for asyncomplete.vim
 Plugin 'yami-beta/asyncomplete-omni.vim'
 
+" A vim plugin for communicating with a language server
+Plugin 'natebosch/vim-lsc'
+
 " LSP settings for each languages
 if executable('pyls')
     " It requries command that `pip install python-language-server`
@@ -194,12 +203,22 @@ if executable('pyls')
         \ })
 endif
 if executable('rls')
-    " It requries command that `pip install python-language-server`
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rls']},
         \ 'whitelist': ['rust'],
         \ })
+endif
+if executable('golsp')
+  augroup LspGo
+    au!
+    autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'go-lang',
+        \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd FileType go setlocal omnifunc=lsp#complete
+  augroup END
 endif
 let g:lsp_diagnostics_enabled = 0
 

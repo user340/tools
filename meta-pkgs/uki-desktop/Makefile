@@ -1,5 +1,5 @@
 # $NetBSD$
-DISTNAME=	uki-desktop-20191010
+DISTNAME=	uki-desktop-20191013
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
 
@@ -17,7 +17,7 @@ DEPENDS+=	noto-ttf-[0-9]*:../../fonts/noto-ttf
 DEPENDS+=	ricty-ttf-[0-9]*:../../fonts/ricty-ttf
 DEPENDS+=	feh-[0-9]*:../../graphics/feh
 DEPENDS+=	ibus-mozc-[0-9]*:../../inputmethod/ibus-mozc
-DEPENDS+=	npm-[0-9]*:../../lang/npm
+# DEPENDS+=	npm-[0-9]*:../../lang/npm
 DEPENDS+=	python37-[0-9]*:../../lang/python37
 DEPENDS+=	tmux-[0-9]*:../../misc/tmux
 DEPENDS+=	neomutt-[0-9]*:../../mail/neomutt
