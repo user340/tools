@@ -97,7 +97,11 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 
 " Run commands quickly.
 Plugin 'thinca/vim-quickrun'
-let g:quickrun_config = {'*': {'hook/time/enable': '1','outputter/buffer/split': '15'},}
+let g:quickrun_config = {
+    \ '*': {
+    \   'hook/time/enable': '1',
+    \   'outputter/buffer/split': '15'
+    \ },}
 set splitbelow
 
 " Syntastic is a syntax checking plugin for Vim created by Martin Grenfell. It
