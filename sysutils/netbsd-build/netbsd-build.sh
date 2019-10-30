@@ -1,4 +1,7 @@
 #!/bin/sh
+# Copyright (c) 2019 Yuuki Enomoto
+# Copyright (c) 2001-2011 The NetBSD Foundation, Inc.
+# All rights reserved.
 
 _bomb()
 {
@@ -12,6 +15,12 @@ _usage()
 $0 [-r ROOTDIR] [-huU]
 
  Options
+    -a              Set MACHINE_ARCH to arch.
+                    [Default: deduced from MACHINE]
+    -m              Set MACHINE to mach.  Some mach values are
+                    actually aliases that set MACHINE/MACHINE_ARCH
+                    pairs.  [Default: deduced from the host system
+                    if the host OS is NetBSD]
     -r              Remove contents of TOOLDIR and DESTDIR before 
                     building.
     -u              *Do not* run "make cleandir" first.
@@ -26,6 +35,7 @@ EOF
 }
 
 MACHINE="$(uname -m)"
+MACHINE_ARCH="$(uname -p)"
 
 ROOT="/zpool"
 SRC="$ROOT/src"
@@ -40,8 +50,9 @@ CMD="./build.sh \
      -O $OBJ \
      -R $RELEASE \
      -T $TOOLS \
+     -V NETBSD_OFFICIAL_RELEASE=no \
+     -V BUILD=yes \
      -X $XSRC \
-     -m $MACHINE \
      -x \
      -j3"
 HG="/usr/pkg/bin/hg"
@@ -49,8 +60,10 @@ SUDO="/usr/pkg/bin/sudo"
 
 # Parse arguments
 
-while getopts ruUh OPT; do
+while getopts ruUha:m: OPT; do
     case $OPT in
+    "a") CMD="$CMD -a $OPTARGS" ;;
+    "m") CMD="$CMD -m $OPTARGS" ;;
     "r") CMD="$CMD -r" ;;
     "u") CMD="$CMD -u" ;;
     "U") CMD="$CMD -U" ;;
