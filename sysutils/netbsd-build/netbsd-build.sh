@@ -62,8 +62,8 @@ SUDO="/usr/pkg/bin/sudo"
 
 while getopts ruUha:m: OPT; do
     case $OPT in
-    "a") CMD="$CMD -a $OPTARGS" ;;
-    "m") CMD="$CMD -m $OPTARGS" ;;
+    "a") CMD="$CMD -a $OPTARG" ;;
+    "m") CMD="$CMD -m $OPTARG" ;;
     "r") CMD="$CMD -r" ;;
     "u") CMD="$CMD -u" ;;
     "U") CMD="$CMD -U" ;;
