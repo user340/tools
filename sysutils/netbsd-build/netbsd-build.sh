@@ -50,6 +50,8 @@ CMD="./build.sh \
      -O $OBJ \
      -R $RELEASE \
      -T $TOOLS \
+     -V MKDEBUG=yes \
+     -V MKDEBUGLIB=yes \
      -V NETBSD_OFFICIAL_RELEASE=no \
      -V BUILD=yes \
      -X $XSRC \
