@@ -34,26 +34,19 @@ EOF
     exit 0
 }
 
-MACHINE="$(uname -m)"
-MACHINE_ARCH="$(uname -p)"
-
 ROOT="/zpool"
 SRC="$ROOT/src"
 XSRC="$ROOT/xsrc"
 OBJ="$ROOT/obj"
 TOOLS="$ROOT/tools"
 RELEASE="$ROOT/releasedir"
-DEST="$ROOT/destdir/$MACHINE"
 CMD="./build.sh \
-     -D $DEST \
-     -N0 \
      -O $OBJ \
      -R $RELEASE \
      -T $TOOLS \
      -V MKDEBUG=yes \
      -V MKDEBUGLIB=yes \
-     -V NETBSD_OFFICIAL_RELEASE=no \
-     -V BUILD=yes \
+     -V MKLINT=yes \
      -X $XSRC \
      -x \
      -j3"
@@ -64,8 +57,8 @@ SUDO="/usr/pkg/bin/sudo"
 
 while getopts ruUha:m: OPT; do
     case $OPT in
-    "a") CMD="$CMD -a $OPTARG" ;;
-    "m") CMD="$CMD -m $OPTARG" ;;
+    "a") MACHINE_ARCH="$OPTARG" ;;
+    "m") MACHINE="$OPTARG" ;;
     "r") CMD="$CMD -r" ;;
     "u") CMD="$CMD -u" ;;
     "U") CMD="$CMD -U" ;;
@@ -73,6 +66,12 @@ while getopts ruUha:m: OPT; do
     *) _usage ;;
     esac
 done
+
+MACHINE=${MACHINE:=$(uname -m)}
+MACHINE_ARCH=${MACHINE_ARCH:=$(uname -p)}
+DEST="$ROOT/destdir/$MACHINE"
+
+CMD="$CMD -a $MACHINE_ARCH -m $MACHINE -D $DEST"
 
 # Initial check
 
