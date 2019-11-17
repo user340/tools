@@ -13,6 +13,8 @@
   p{text-indent: 1em;}
   b.root:before{content: "# ";}
   b.user:before{content: "$ ";}
+  .contens h2{
+  }
   .tiny{
     margin: auto auto;
     line-height: 1.70;
@@ -120,6 +122,8 @@
   }
   b.root:before{content: "# ";}
   b.user:before{content: "$ ";}
+  .contens h2{
+  }
   .tiny{
     font-size: 80%;
     margin: auto auto;
