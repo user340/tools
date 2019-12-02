@@ -9,7 +9,7 @@ def main() -> None:
 
     if not css.exists():
         raise FileNotFoundError
-    with open(css.as_posix(), mode='r', encoding='utf-8') as f:
+    with css.open(mode='r', encoding='utf-8') as f:
         print(compress(f.read()))
 
 
