@@ -70,6 +70,31 @@ setopt share_history
 
 #################################################
 #
+# function
+#
+#################################################
+function chpwd() {
+    ls -F
+}
+
+function is_active_network_interface() {
+    ifconfig "$1" | grep -q "status: active"
+}
+
+function show_ip_addr() {
+    ifconfig "$1" | grep "inet " | awk '{print $2}'
+}
+
+function get_ip_addr() {
+    if is_active_network_interface iwn0; then
+        show_ip_addr iwn0
+    elif is_active_network_interface wm0; then
+        show_ip_addr wm0
+    fi
+}
+
+#################################################
+#
 # Environment
 #
 #################################################
@@ -81,7 +106,7 @@ export EDITOR='vim'
 export CVS_RSH='ssh'
 export TERM='xterm-256color'
 export LANG='ja_JP.UTF-8'
-ip=$(ifconfig iwn0 | grep 'inet ' | awk '{print $2}')
+ip=$(get_ip_addr)
 export PROMPT='%{${fg[yellow]}%}%B[$ip] %n@%~%b%{${reset_color}%} ${vcs_info_msg_0_}
 $ ' # Two lines
 export JAVA_HOME='/usr/pkg/java/openjdk8'
@@ -101,13 +126,3 @@ alias pdf="mupdf"
 alias filer="pcmanfm"
 alias buildbot="buildbot-3.7"
 alias buildbot-worker="buildbot-worker-3.7"
-
-#################################################
-#
-# function
-#
-#################################################
-function chpwd() {
-    ls -F
-}
-
