@@ -34,16 +34,14 @@ Python、Web API、テスト駆動開発の勉強を兼ねて、ConoHa VPSで契
 
 ## Requires
 
-|ソフトウェア|バージョン|アーキテクチャ|
-|:--|:--|:--|
-|NetBSD|8.0|amd64|
-|pkgsrc|2019Q1|-|
-|Python|3.7.1|x86\_64|
+| ソフトウェア | バージョン | アーキテクチャ |
+| :--          | :--        | :--            |
+| NetBSD       | 9.99.20    | amd64          |
+| pkgsrc       | current    | -              |
+| Python       | 3.8.0      | x86\_64        |
 
 ```
-$ python3.7 -m venv ~/.venv/conohactl
-$ source ~/.venv/conohactl/bin/activate
-$ pip install -r requirements.txt
+$ pipenv install
 ```
 
 ## How to use
@@ -68,7 +66,7 @@ optional arguments:
 
 ### Configuration
 
-`src/conf/conohactl.conf`を編集してください。必要な情報はConoHa VPSの管理コンソール画面から確認できます。
+`src/conf/conohactl.conf`を編集する。必要な情報はConoHa VPSの管理コンソール画面から確認できる。
 
 ```
 username: ConoHa VPSのAPIユーザ名
@@ -90,7 +88,7 @@ $ ./src/conoha.py list
 
 ### Billing invoices
 
-`bill`コマンドから請求情報を確認できます。デフォルトでは、最新10件の請求情報を出力します。
+`bill`コマンドから請求情報を確認できる。デフォルトでは、最新10件の請求情報を出力する。
 
 ```
 $ ./src/conoha.py bill
@@ -102,7 +100,7 @@ Invoice ID    Type    Yen (include tax)           Due
 
 ### VM information
 
-VMの詳細は`info`コマンドにUUIDを渡すことで確認できます。
+VMの詳細は`info`コマンドにUUIDを渡すことで確認できる。
 
 ```
 $ ./src/conoha.py info ffffffff-ffff-ffff-ffff-ffffffffffff
@@ -117,7 +115,7 @@ $ ./src/conoha.py info ffffffff-ffff-ffff-ffff-ffffffffffff
 
 ### Start/Stop/Reboot VM
 
-サーバの起動・停止・再起動ができます。サーバのUUIDは`list`で確認してください。
+サーバの起動・停止・再起動ができる。サーバのUUIDは`list`で確認する。
 
 ```
 $ ./src/conoha.py start ffffffff-ffff-ffff-ffff-ffffffffffff
@@ -142,7 +140,7 @@ NetBSD   ACTIVE     ->   ACTIVE
 
 ### Change billing plan
 
-`change`コマンドにUUIDと課金プランを渡すことで、課金プランの変更ができます。
+`change`コマンドにUUIDと課金プランを渡すことで、課金プランの変更ができる。
 
 ```
 $ ./src/conoha.py change ffffffff-ffff-ffff-ffff-ffffffffffff g-1gb
@@ -200,7 +198,7 @@ NetBSD   g-2gb      ->   g-1gb
 
 ConoHa APIはOpenStack準拠なので、認証に関してはOpenStackの文書を読む。
 
-> OpenStack サービスへのアクセスの認証を行うには、まず最初に、ペイロードにクレデンシャルを指定して OpenStack Identity に認証リクエストを行って、認証トークンを取得する必要があります。
+> OpenStack サービスへのアクセスの認証を行うには、まず最初に、ペイロードにクレデンシャルを指定して OpenStack Identity に認証リクエストを行って、認証トークンを取得する必要がある。
 
 - User Domain
 - ユーザ名

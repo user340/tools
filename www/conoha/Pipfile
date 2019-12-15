@@ -1,0 +1,30 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+python-language-server = "*"
+flake8-mypy = "*"
+mypy = "*"
+
+[packages]
+certifi = "*"
+chardet = "*"
+entrypoints = "*"
+future = "*"
+idna = "*"
+jedi = "*"
+mccabe = "*"
+parso = "*"
+pluggy = "*"
+pycodestyle = "*"
+pyflakes = "*"
+python-jsonrpc-server = "*"
+requests = "*"
+texttable = "*"
+urllib3 = "*"
+PyYAML = "*"
+
+[requires]
+python_version = "3.8"
