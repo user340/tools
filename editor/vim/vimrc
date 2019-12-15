@@ -91,17 +91,23 @@ Plugin 'VundleVim/Vundle.vim'
 " pleasant for the eyes.
 Plugin 'morhetz/gruvbox'
 
+" A Vim plugin which shows a git diff in the gutter (sign column) and
+" stages/undoes hunks and partial hunks.
+Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_highlight_lines = 1
+let g:gitgutter_git_executable = '/usr/pkg/bin/git'
+set updatetime=100
+
 " vim-bracketed-paste enables transparent pasting into vim.
 " (i.e. no more :set paste!)
 Plugin 'ConradIrwin/vim-bracketed-paste'
 
+" vim match-up: even better %
+Plugin 'andymass/vim-matchup'
+
 " Run commands quickly.
 Plugin 'thinca/vim-quickrun'
-let g:quickrun_config = {
-    \ '*': {
-    \   'hook/time/enable': '1',
-    \   'outputter/buffer/split': '15'
-    \ },}
+let g:quickrun_config = {'*': {'hook/time/enable': '1','outputter/buffer/split': '15'},}
 set splitbelow
 
 " Syntastic is a syntax checking plugin for Vim created by Martin Grenfell. It
@@ -117,8 +123,9 @@ set splitbelow
 "   - HTML5
 "       * textlint
 Plugin 'vim-syntastic/syntastic'
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = ['flake8', 'mypy']
 let g:syntastic_rust_chechkers = ['cargo']
+let g:syntastic_go_checkers = ['golint']
 
 " VimWiki is a personal wiki for Vim
 " -- a number of linked text files that have their own syntax highlighting.
@@ -223,6 +230,13 @@ if executable('golsp')
         \ })
     autocmd FileType go setlocal omnifunc=lsp#complete
   augroup END
+endif
+if executable('bash-language-server')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'bash-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server start']},
+        \ 'whitelist': ['sh'],
+        \ })
 endif
 let g:lsp_diagnostics_enabled = 0
 
@@ -330,4 +344,8 @@ else
     set softtabstop=4
     set shiftwidth=4
     set expandtab
+endif
+
+if extension == 'rs'
+    set colorcolumn=100
 endif
