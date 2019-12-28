@@ -31,7 +31,16 @@ textlint-rule-prefer-tari-tari
 textlint-rule-preset-jtf-style
 textlint-rule-sentence-length
 textlint-rule-terminology"
+textlintrc="textlintrc"
 
 for package in $targets; do
   $cmd "$cmd_opt" "$package"
 done
+
+if [ -f "$textlintrc" ]; then
+    if [ -f "$HOME/.${textlintrc}" ]; then
+        exit 0
+    else
+        cp "$textlintrc" "$HOME/.${textlintrc}"
+    fi
+fi
