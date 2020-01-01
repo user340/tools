@@ -95,8 +95,10 @@ Plugin 'morhetz/gruvbox'
 " stages/undoes hunks and partial hunks.
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_highlight_lines = 1
-let g:gitgutter_git_executable = '/usr/pkg/bin/git'
+let g:gitgutter_git_executable = '/usr/local/bin/git'
+let g:gitgutter_highlight_lines = 0
 set updatetime=100
+
 
 " vim-bracketed-paste enables transparent pasting into vim.
 " (i.e. no more :set paste!)
@@ -146,6 +148,11 @@ let g:vimwiki_list = [
 " A vim 7.4+ plugin to generate table of contents for Markdown files.
 Plugin 'mzlogin/vim-markdown-toc'
 
+" Distraction-free writing in Vim
+Plugin 'junegunn/goyo.vim'
+autocmd! User GoyoLeave nested q
+nmap \g :Goyo<CR>
+
 " Auto close (X)HTML tags
 Plugin 'alvan/vim-closetag'
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
@@ -164,6 +171,13 @@ let g:closetag_close_shortcut = '<leader>>'
 " tags, and more. The plugin provides mappings to easily delete, change and add
 " such surroundings in pairs.
 Plugin 'tpope/vim-surround'
+
+" A tree explorer plugin for vim.
+Plugin 'scrooloose/nerdtree'
+" Activate nerdtree when open vim with no file
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Close vim when activate only nerdtree window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " This is a Vim plugin that provides Rust file detection, syntax highlighting,
 " formatting, Syntastic integration, and more. It requires Vim 8 or higher for
@@ -348,4 +362,5 @@ endif
 
 if extension == 'rs'
     set colorcolumn=100
+    nnoremap ct :w<CR>:Cargo test<CR>
 endif
