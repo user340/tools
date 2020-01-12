@@ -1,5 +1,5 @@
 # $NetBSD$
-DISTNAME=	uki-desktop-20191013
+DISTNAME=	uki-desktop-20200112
 CATEGORIES=	meta-pkgs
 MASTER_SITES=	# empty
 
@@ -12,7 +12,6 @@ DEPENDS+=	exctags-[0-9]*:../../devel/exctags
 DEPENDS+=	git-[0-9]*:../../devel/git
 DEPENDS+=	global-[0-9]*:../../devel/global
 DEPENDS+=	go-tools-[0-9]*:../../devel/go-tools
-DEPENDS+=	mercurial-[0-9]*:../../devel/mercurial
 DEPENDS+=	vim-[0-9]*:../../editors/vim
 DEPENDS+=	noto-ttf-[0-9]*:../../fonts/noto-ttf
 DEPENDS+=	ricty-ttf-[0-9]*:../../fonts/ricty-ttf
