@@ -9,9 +9,9 @@ import (
 
 // ConfigData used to contain data which read from YAML
 type ConfigData struct {
-	Server string
-	User   string
-	Pass   string
+	Server   string
+	User     string
+	Password string
 }
 
 func readConfig(path string) []byte {

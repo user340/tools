@@ -1,3 +1,3 @@
 server: "192.168.1.100"
 user: "Admin"
-pass: "zabbix"
+password: "zabbix"
