@@ -1,0 +1,69 @@
+#!/bin/sh
+# shellcheck disable=2039
+
+TAB="	"
+
+_bomb()
+{
+    printf "%s\n" "$@"
+    exit 1
+}
+
+_usage()
+{
+    printf "%s: [-c CONF] [-d PKGSRCDIR]\n" "$0" 1>&2
+    exit 2
+}
+
+_get_PKGNAME()
+{
+    cd "$PKGSRCDIR/$1" && \
+    make show-all-pkgname | grep "def${TAB}PKGNAME=" | awk '{print $3}'
+}
+
+_is_already_built()
+{
+    local package
+    local suffix=".tgz"
+
+    package=$(_get_PKGNAME "$1")
+
+    test -f "${PKGSRCDIR}/packages/All/${package}${suffix}"
+}
+
+_build()
+{
+    cd "${PKGSRCDIR}/${1}" && make package clean clean-depends
+}
+
+while getopts c:d:m:h OPT; do
+    case $OPT in
+    c)  CONF=$OPTARG ;;
+    d)  PKGSRCDIR=$OPTARG ;;
+    m)  MAKE=$OPTARG ;;
+    h)  _usage ;;
+    \?) _usage ;; 
+    esac
+done
+shift $((OPTIND - 1))
+
+CONF=${CONF:="pkgs.conf"}
+PKGSRCDIR=${PKGSRCDIR:="/usr/pkgsrc"}
+MAKE=${MAKE:="/usr/bin/make"}
+
+LOG="$HOME/pkgsrc-builder.log"
+
+test -f "$CONF" || _bomb "$CONF: no such file"
+test -d "$PKGSRCDIR" || _bomb "$PKGSRCDIR: no such directory"
+test -f "$MAKE" || _bomb "$MAKE: command not found"
+
+while read -r package; do
+    if _is_already_built "$package"; then
+        continue
+    fi
+    if _build "$package"; then
+        echo "success: $package" >> "$LOG"
+    else
+        echo "failed: $package" >> "$LOG"
+    fi
+done < $CONF
