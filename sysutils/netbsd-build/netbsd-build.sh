@@ -33,7 +33,7 @@ _bomb()
 _usage()
 {
     cat << EOF
-$0 [-hruU]
+$0 [ruU]
 
  Options
     -r              Remove contents of TOOLDIR and DESTDIR before 
@@ -44,7 +44,6 @@ $0 [-hruU]
     -U              Build without requiring root privileges,
                     install from an UNPRIVED build with proper
                     file permissions.
-    -h              Show this message.
 EOF
     exit 1
 }
@@ -52,7 +51,7 @@ EOF
 SRC="$HOME/src/cvs.NetBSD.org/src"
 XSRC="$HOME/src/cvs.NetBSD.org/xsrc"
 
-ROOT="/zshare/netbsd-build/amd64"
+ROOT="/zshare/netbsd-build"
 OBJ="$ROOT/obj"
 TOOLS="$ROOT/tools"
 RELEASE="$ROOT/releasedir"
@@ -64,9 +63,6 @@ CMD_OPT="-a x86_64 \
          -O $OBJ \
          -R $RELEASE \
          -T $TOOLS \
-         -V MKDEBUG=yes \
-         -V MKDEBUGLIB=yes \
-         -V MKLINT=yes \
          -X $XSRC \
          -x \
          -j8"
@@ -84,12 +80,11 @@ done
 
 # Parse arguments
 
-while getopts ruUha:m: OPT; do
+while getopts ruU OPT; do
     case $OPT in
     "r") CMD_OPT="$CMD_OPT -r" ;;
     "u") CMD_OPT="$CMD_OPT -u" ;;
     "U") CMD_OPT="$CMD_OPT -U" ;;
-    "h") _usage ;;
     *) _usage ;;
     esac
 done
@@ -103,4 +98,6 @@ cd "$SRC" \
     && $PRIV "$BUILD_CMD" $CMD_OPT tools \
     && $PRIV "$BUILD_CMD" $CMD_OPT kernel=GENERIC \
     && $PRIV "$BUILD_CMD" $CMD_OPT distribution \
-    && $PRIV "$BUILD_CMD" $CMD_OPT sets
+    && $PRIV "$BUILD_CMD" $CMD_OPT sets \
+    && $PRIV "$BUILD_CMD" $CMD_OPT releasekernel=GENERIC \
+    && $PRIV "$BUILD_CMD" $CMD_OPT syspkgs
