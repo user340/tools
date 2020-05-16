@@ -62,11 +62,12 @@ precmd () { vcs_info }
 #
 #################################################
 setopt IGNOREEOF
-setopt auto_pushd
 setopt hist_ignore_all_dups
 setopt pushd_ignore_dups
-setopt prompt_subst
 setopt share_history
+setopt auto_pushd
+setopt auto_cd
+setopt list_packed
 
 #################################################
 #
