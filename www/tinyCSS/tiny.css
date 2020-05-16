@@ -4,6 +4,7 @@ body {
 pre {
   padding-top: 2em;
   padding-bottom: 2em;
+  padding-left: 2em;
   line-height: 0;
   white-space: pre-wrap
 }
