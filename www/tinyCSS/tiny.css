@@ -1,5 +1,6 @@
 body {
-  background: #F4F5F7
+  background: #F4F5F7;
+  font-size: 110%
 }
 pre {
   padding-top: 2em;
@@ -21,7 +22,8 @@ b.user:before {
   content: "$ "
 }
 code {
-  line-height: 1.5
+  line-height: 1.5;
+  font-size: 90%
 }
 th, td {
   padding: 0.5em 1em;
