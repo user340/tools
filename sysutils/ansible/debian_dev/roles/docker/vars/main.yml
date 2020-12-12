@@ -1,0 +1,5 @@
+---
+docker_url: https://download.docker.com/linux/debian
+docker_group: docker
+your_users:
+  - uki

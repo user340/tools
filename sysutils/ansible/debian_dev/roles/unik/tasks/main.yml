@@ -1,0 +1,16 @@
+---
+# See:
+#   - https://github.com/solo-io/unik/blob/master/docs/install.md
+
+- name: Import docker role
+  import_role:
+    name: docker
+
+- name: Install prerequisites packages
+  apt:
+    name:
+      - git
+      - go-bindata
+      - jq
+      - make
+      - qemu-system

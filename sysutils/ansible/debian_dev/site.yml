@@ -1,0 +1,7 @@
+---
+
+- name: Setup develop environment on Debian GNU/Linux
+  become: true
+  hosts: debian_dev
+  roles:
+    - unik
