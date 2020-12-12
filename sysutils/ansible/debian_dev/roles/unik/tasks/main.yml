@@ -23,7 +23,7 @@
 
 - name: Install Golang
   become: true
-  become_user: uki
+  become_user: "{{ dev_user }}"
   unarchive:
     src: "/usr/local/src/{{ golang_tarball }}"
     dest: "{{ homedir }}"
@@ -32,7 +32,7 @@
 
 - name: Checkout solo-io/unik repository
   become: true
-  become_user: uki
+  become_user: "{{ dev_user }}"
   git:
     repo: "https://github.com/solo-io/unik.git"
     dest: "{{ homedir }}/src/unik"
