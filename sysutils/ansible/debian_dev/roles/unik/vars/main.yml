@@ -1,0 +1,8 @@
+---
+dev_user: uki
+homedir: "/home/{{ dev_user }}"
+
+golang_version: 1.15.6
+golang_checksum: sha256:3918e6cc85e7eaaa6f859f1bdbaac772e7a825b0eb423c63d3ae68b21f84b844
+golang_tarball: "go{{ golang_version }}.linux-amd64.tar.gz"
+golang_location: "https://golang.org/dl/{{ golang_tarball }}"

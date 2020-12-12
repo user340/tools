@@ -2,7 +2,7 @@
 # See:
 #   - https://github.com/solo-io/unik/blob/master/docs/install.md
 
-- name: Import docker role
+- name: Import docker roles
   import_role:
     name: docker
 
@@ -14,3 +14,25 @@
       - jq
       - make
       - qemu-system
+
+- name: Download Golang tarball
+  get_url:
+    url: "{{ golang_location }}"
+    dest: "/usr/local/src/{{ golang_tarball }}"
+    checksum: "{{ golang_checksum }}"
+
+- name: Install Golang
+  become: true
+  become_user: uki
+  unarchive:
+    src: "/usr/local/src/{{ golang_tarball }}"
+    dest: "{{ homedir }}"
+    copy: no
+    creates: "{{ homedir }}/go"
+
+- name: Checkout solo-io/unik repository
+  become: true
+  become_user: uki
+  git:
+    repo: "https://github.com/solo-io/unik.git"
+    dest: "{{ homedir }}/src/unik"
