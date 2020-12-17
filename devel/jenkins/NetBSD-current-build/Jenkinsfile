@@ -2,26 +2,30 @@ pipeline {
     agent {label 'src-builder'}
 
     environment {
-        src="/usr/src"
-        xsrc="/usr/xsrc"
-        obj="/usr/obj"
-        tools="/usr/tools"
-        releases="${obj}/releasedir/amd64/binary"
-        build_cmd="./build.sh -O ${obj} -T ${tools} -X ${xsrc} -x -j 6 "
+        src         = "/usr/src"
+        xsrc        = "/usr/xsrc"
+        obj         = "/usr/obj"
+        tools       = "/usr/tools"
+        releases    = "${obj}/releasedir/amd64/binary"
+        branch      = "trunk"
+        build_cmd   = "./build.sh -O ${obj} -T ${tools} -X ${xsrc} -x -j 6 "
     }
 
     stages {
-        stage('Checkout latest src') {
+        stage('Checkout trunk') {
             steps {
-                dir(src) {
-                    sh('hg pull && hg update')
-                }
-                dir(xsrc) {
-                    sh('hg pull && hg update')
+                script {
+                    sources = ["${src}", "${xsrc}"]
+                    sources.each { source ->
+                        dir(source) {
+                            sh("hg checkout ${branch}")
+                            sh("hg pull && hg update")
+                        }
+                    }
                 }
             }
         }
-        stage('Build and install tools') {
+        stage('Build tools') {
             steps {
                 dir(src){
                     sh("${build_cmd} -r tools")
@@ -32,12 +36,6 @@ pipeline {
             steps {
                 dir(src) {
                     sh("${build_cmd} kernel=GENERIC")
-                }
-            }
-        }
-        stage('Release GENERIC kernel') {
-            steps {
-                dir(src) {
                     sh("${build_cmd} releasekernel=GENERIC")
                 }
             }
@@ -49,7 +47,7 @@ pipeline {
                 }
             }
         }
-        stage('Create binary sets') {
+        stage('Build sets') {
             steps {
                 dir(src) {
                     sh("${build_cmd} sets")
@@ -63,8 +61,7 @@ pipeline {
                 www     = "/var/www/netbsd/${version}/${machine}/binary"
             }
             steps {
-                sh("mkdir -p ${www}/sets")
-                sh("mkdir -p ${www}/kernel")
+                sh("mkdir -p ${www}/sets ${www}/kernel")
                 sh("cp ${releases}/sets/* ${www}/sets")
                 sh("cp ${releases}/kernel/* ${www}/kernel")
             }
