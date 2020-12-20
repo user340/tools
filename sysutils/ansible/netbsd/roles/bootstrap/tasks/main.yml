@@ -1,0 +1,7 @@
+---
+
+- name: Install Packages for Ansible
+  raw: "/usr/sbin/pkg_add https://cdn.netbsd.org/pub/pkgsrc/packages/$(uname)/$(uname -m)/$(uname -r)/All/{{ item }}"
+  with_items:
+    - python38-3.8.5.tgz
+    - pkgin-20.8.0.tgz

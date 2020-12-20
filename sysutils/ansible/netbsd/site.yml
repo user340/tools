@@ -1,0 +1,14 @@
+---
+
+- name: Bootstrap NetBSD host for Ansible
+  gather_facts: no
+  hosts: netbsd_bootstrap
+  roles:
+    - bootstrap
+
+- name: Setup NetBSD host
+  hosts: netbsd
+  roles:
+    - pkgin
+    - jenkins_node
+    - pkgsrc

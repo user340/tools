@@ -1,0 +1,6 @@
+---
+
+- name: Install OpenJDK
+  pkgin:
+    name: openjdk8
+    state: present

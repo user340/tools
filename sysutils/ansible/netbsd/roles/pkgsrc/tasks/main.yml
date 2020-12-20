@@ -1,0 +1,20 @@
+---
+
+- name: Install Git/Certificates to checkout pkgsrc
+  pkgin:
+    name:
+      - git
+      - mozilla-rootcerts
+    state: present
+
+- name: Extract and rehash all CA root certificates
+  shell: /usr/pkg/sbin/mozilla-rootcerts install
+  args:
+    creates: /etc/openssl/certs/mozilla-rootcert-0.pem
+
+- name: Checkout pkgsrc trunk from GitHub mirror
+  git:
+    executable: /usr/pkg/bin/git
+    repo: https://github.com/netbsd/pkgsrc.git
+    dest: /usr/pkgsrc
+    version: trunk

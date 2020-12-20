@@ -1,0 +1,13 @@
+---
+
+- name: Deploy repositories.conf
+  template:
+    src: repositories.conf
+    dest: /usr/pkg/etc/pkgin/repositories.conf
+    owner: root
+    group: wheel
+    mode: '0644'
+
+- name: Update repository cache
+  pkgin:
+    update_cache: yes
