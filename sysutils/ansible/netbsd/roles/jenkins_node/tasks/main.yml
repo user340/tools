@@ -1,8 +1,10 @@
 ---
 
-- name: Install OpenJDK
+- name: Install packages
   pkgin:
-    name: openjdk8
+    name:
+      - openjdk8
+      - rsync
     state: present
 
 - name: Create Jenkins remote FS root

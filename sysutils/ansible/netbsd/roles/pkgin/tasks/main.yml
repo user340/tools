@@ -1,12 +1,15 @@
 ---
 
-- name: Deploy repositories.conf
+- name: Deploy configurations
   template:
-    src: repositories.conf
-    dest: /usr/pkg/etc/pkgin/repositories.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: wheel
     mode: '0644'
+  with_items:
+    - {src: repositories.conf, dest: /usr/pkg/etc/pkgin/repositories.conf}
+    - {src: mk.conf, dest: /etc/mk.conf}
 
 - name: Update repository cache
   pkgin:
