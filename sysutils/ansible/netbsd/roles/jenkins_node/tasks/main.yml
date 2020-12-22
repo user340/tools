@@ -4,3 +4,8 @@
   pkgin:
     name: openjdk8
     state: present
+
+- name: Create Jenkins remote FS root
+  file:
+    path: /var/jenkins
+    state: directory
