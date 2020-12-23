@@ -12,3 +12,4 @@
     - pkgin
     - jenkins_node
     - pkgsrc
+    - httpd
