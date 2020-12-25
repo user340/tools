@@ -1,0 +1,14 @@
+---
+
+- name: Install sysupgrade
+  pkgin:
+    name: sysupgrade
+    state: present
+
+- name: Deploy sysupgrade.conf
+  template:
+    src: sysupgrade.conf
+    dest: /usr/pkg/etc/sysupgrade.conf
+    owner: root
+    group: wheel
+    mode: '0644'
