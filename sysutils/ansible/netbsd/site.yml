@@ -11,5 +11,5 @@
   roles:
     - pkgin
     - jenkins_node
-    - pkgsrc
+    - pkgsrc_wip
     - httpd
