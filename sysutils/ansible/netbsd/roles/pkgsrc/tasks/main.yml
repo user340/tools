@@ -17,6 +17,7 @@
     executable: /usr/pkg/bin/git
     repo: https://github.com/netbsd/pkgsrc.git
     dest: /usr/pkgsrc
+    depth: 1
     version: trunk
 
 - name: Deploy mk.conf

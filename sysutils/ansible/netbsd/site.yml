@@ -6,10 +6,7 @@
   roles:
     - bootstrap
 
-- name: Setup NetBSD host
-  hosts: netbsd
+- name: Setup pkgsrc & pkgsrc-wip in NetBSD host
+  hosts: netbsd_pkgsrc
   roles:
-    - pkgin
-    - jenkins_node
     - pkgsrc_wip
-    - httpd
