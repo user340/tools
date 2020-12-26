@@ -18,3 +18,11 @@
     repo: https://github.com/netbsd/pkgsrc.git
     dest: /usr/pkgsrc
     version: trunk
+
+- name: Deploy mk.conf
+  template:
+    src: mk.conf
+    dest: /etc/mk.conf
+    owner: root
+    group: wheel
+    mode: '0644'

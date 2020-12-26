@@ -1,0 +1,8 @@
+---
+
+- name: Checkout pkgsrc-wip
+  git:
+    executable: /usr/pkg/bin/git
+    repo: git://wip.pkgsrc.org/pkgsrc-wip.git
+    dest: /usr/pkgsrc/wip
+    depth: 1
