@@ -11,6 +11,10 @@ URxvt.scrollBar: false
 URxvt.cursorUnderline: true
 URxvt*transparent: true
 URxvt*shading: 30
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/local/bin/xdg-open
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg5
 
 URxvt.color0:               [90]#282828
 URxvt.color1:               [90]#cc241d
