@@ -1,3 +1,25 @@
+function s:Quote()
+    let pos = getpos(".")
+    execute ":normal i"
+        \ . "<figure><blockquote><p></p></blockquote>"
+        \ . "<footer>&mdash; <cite></cite>, <cite></cite>"
+        \ . "</footer></figure>"
+    call setpos(".", pos)
+endfunction
+command Quote call Quote()
+
+function s:do_exctags() abort
+    let tag = '.tags'
+    let path = findfile(tag, '.;')
+
+    if path ==# ''
+        return
+    endif
+
+    let tag_directory = fnamemodify(path, ':p:h')
+    execute 'silent !cd ' tag_directory '&& exctags -R -f ' tag ' 2> /dev/null &'
+endfunction
+
 " Magic
 if &compatible
     set nocompatible
@@ -67,8 +89,6 @@ set fileformats=unix,mac,dos
 set fileencoding=utf-8
 set fileencodings=utf-8,shift-jis,euc-jp
 
-set clipboard=nonameed,autoselect
-
 ""
 " How to Install Vundle (https://github.com/VundleVim/Vundle.vim.git)
 "     1. Clone Vundle.vim to $HOME/.vim/bundle
@@ -99,7 +119,6 @@ let g:gitgutter_git_executable = '/usr/local/bin/git'
 let g:gitgutter_highlight_lines = 0
 set updatetime=100
 
-
 " vim-bracketed-paste enables transparent pasting into vim.
 " (i.e. no more :set paste!)
 Plugin 'ConradIrwin/vim-bracketed-paste'
@@ -107,27 +126,10 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 " vim match-up: even better %
 Plugin 'andymass/vim-matchup'
 
-" Run commands quickly.
-Plugin 'thinca/vim-quickrun'
-let g:quickrun_config = {'*': {'hook/time/enable': '1','outputter/buffer/split': '15'},}
-set splitbelow
-
-" Syntastic is a syntax checking plugin for Vim created by Martin Grenfell. It
-" runs files through external syntax checkers and displays any resulting errors
-" to the user. This can be done on demand, or automatically as files are saved.
-" If syntax errors are detected, the user is notified and is happy because they
-" didn't have to compile their code or execute their script to find them.
-"
-"   - ShellScript (Bourne Shell, Bash)
-"       * ShellCheck (https://www.shellcheck.net)
-"   - Python3
-"       * Flake8 (http://flake8.pycqa.org/en/latest/)
-"   - HTML5
-"       * textlint
-Plugin 'vim-syntastic/syntastic'
-let g:syntastic_python_checkers = ['flake8', 'mypy']
-let g:syntastic_rust_chechkers = ['cargo']
-let g:syntastic_go_checkers = ['golint']
+" ALE (Asynchronous Lint Engine) is a plugin providing linting (syntax
+" checking and semantic errors) in NeoVim 0.2.0+ and Vim 8 while you edit your
+" text files, and acts as a Vim Language Server Protocol client.
+Plugin 'dense-analysis/ale'
 
 " VimWiki is a personal wiki for Vim
 " -- a number of linked text files that have their own syntax highlighting.
@@ -166,24 +168,6 @@ let g:closetag_regions = {
     \ }
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
-
-" Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
-" tags, and more. The plugin provides mappings to easily delete, change and add
-" such surroundings in pairs.
-Plugin 'tpope/vim-surround'
-
-" A tree explorer plugin for vim.
-Plugin 'scrooloose/nerdtree'
-" Activate nerdtree when open vim with no file
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" Close vim when activate only nerdtree window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" This is a Vim plugin that provides Rust file detection, syntax highlighting,
-" formatting, Syntastic integration, and more. It requires Vim 8 or higher for
-" full functionality. Some things may not work on earlier versions.
-Plugin 'rust-lang/rust.vim'
-let g:rustfmt_autosave = 1
 
 " Go development plugin for Vim https://www.patreon.com/bhcleek
 Plugin 'fatih/vim-go'
@@ -227,11 +211,11 @@ if executable('pyls')
         \ 'whitelist': ['python'],
         \ })
 endif
-if executable('rls')
+if executable('clangd')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rls']},
-        \ 'whitelist': ['rust'],
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['c'],
         \ })
 endif
 if executable('golsp')
@@ -321,34 +305,18 @@ nnoremap Y y$
 nnoremap <CR> o<Esc>
 nnoremap <Space> i<Space><Esc>
 
-" GNU global Configuration
-nmap <C-q> <C-w><C-w><C-w>q
-nmap <C-g> :Gtags -g
-nmap <C-l> :Gtags -f %<CR>
-nmap <C-j> :Gtags <C-r><C-w><CR>
-nmap <C-k> :Gtags -r <C-r><C-w><CR>
-nmap <C-n> :cn<CR>
-nmap <C-p> :cp<CR>
-
-function Quote()
-    let pos = getpos(".")
-    execute ":normal i"
-        \ . "<figure><blockquote><p></p></blockquote>"
-        \ . "<footer>&mdash; <cite></cite>, <cite></cite>"
-        \ . "</footer></figure>"
-    call setpos(".", pos)
-endfunction
-command Quote call Quote()
+" LSP shortcut settings
+nnoremap tj :LspDefinition<cr>
 
 autocmd BufNewFile,BufRead ~/.mutt/tmp/neomutt-* set textwidth=64 colorcolumn=64
+autocmd BufNewFile,BufRead *.txt set textwidth=64 colorcolumn=64
 
-" Indent and Tab/Space Configuration
 let extension = expand("%:e")
 if extension == 'c' || extension == 'go'
     set tabstop=8
     set softtabstop=8
     set shiftwidth=8
-elseif extension == 'html' || extension == 'css'
+elseif extension == 'html' || extension == 'css' || extension == 'bib' || extension == 'tex'
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
@@ -360,7 +328,8 @@ else
     set expandtab
 endif
 
-if extension == 'rs'
-    set colorcolumn=100
-    nnoremap ct :w<CR>:Cargo test<CR>
-endif
+set tags=.tags
+augroup ctags
+    autocmd!
+    autocmd BufWritePost * call s:do_exctags()
+augroup END
