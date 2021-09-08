@@ -27,3 +27,10 @@
     owner: root
     group: wheel
     mode: '0644'
+
+- name: Repository update automation
+  cron:
+    name: 'Update pkgsrc'
+    minute: '0'
+    hour: '*/4'
+    job: 'cd /usr/pkgsrc && git pull'
