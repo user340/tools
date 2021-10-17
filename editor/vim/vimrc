@@ -131,6 +131,11 @@ Plugin 'andymass/vim-matchup'
 " text files, and acts as a Vim Language Server Protocol client.
 Plugin 'dense-analysis/ale'
 
+" Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
+" tags, and more. The plugin provides mappings to easily delete, change and
+" add such surroundings in pairs.
+Plugin 'tpope/vim-surround'
+
 " VimWiki is a personal wiki for Vim
 " -- a number of linked text files that have their own syntax highlighting.
 Plugin 'vimwiki/vimwiki'
