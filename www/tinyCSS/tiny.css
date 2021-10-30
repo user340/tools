@@ -25,15 +25,6 @@ code {
   line-height: 1.5;
   font-size: 90%
 }
-th, td {
-  padding: 0.5em 1em;
-  border: solid 1px black
-}
-table {
-  border: solid 1px black;
-  align: center;
-  border-collapse: collapse
-}
 .referbox {
   margin: 2em auto;
   padding: 1em;
@@ -95,6 +86,15 @@ table {
   content: counters(section, '.');
   counter-increment: section;
   margin-right: 2em
+}
+.tiny th, td {
+  padding: 0.5em 1em;
+  border: solid 1px black
+}
+.tiny table {
+  border: solid 1px black;
+  align: center;
+  border-collapse: collapse
 }
 .table-layout {
   margin: 0 auto;
