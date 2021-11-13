@@ -6,10 +6,3 @@
     repo: git://wip.pkgsrc.org/pkgsrc-wip.git
     dest: /usr/pkgsrc/wip
     depth: 1
-
-- name: Repository update automation
-  cron:
-    name: 'Update pkgsrc-wip'
-    minute: '0'
-    hour: '*/4'
-    job: 'cd /usr/pkgsrc/wip && git pull'
